@@ -1,5 +1,4 @@
 import React from "react";
-import { Tooltip } from "components/Tooltip";
 import styled from "@emotion/styled";
 import Timeline from "./Timeline";
 import {
@@ -32,9 +31,9 @@ import {
   Description,
   DescriptionRow,
   Names,
-  ResumeActionContainer,
   SectionButton,
   Background,
+  AvatarImage,
 } from "./styles";
 import { DarkModeToggle } from "components/DarkModeToggle";
 import { ThemeContext } from "context/ThemeProvider";
@@ -119,7 +118,7 @@ const Resume: React.FC<{
                           name="avatar"
                         />
                       )}
-                      <img
+                      <AvatarImage
                         src={resumeData.avatar || DEFAULT_AVATAR_URL}
                         alt="profile-picture"
                       />
@@ -149,92 +148,6 @@ const Resume: React.FC<{
                           >
                             {resumeData.tagline}
                           </Description>
-                          <ResumeActionContainer>
-                            <Tooltip
-                              tooltip={
-                                isEditing ? "Print changes" : "Download PDF"
-                              }
-                            >
-                              <a
-                                style={{ cursor: "pointer" }}
-                                target="_blank"
-                                rel="noreferrer"
-                                onClick={
-                                  typeof window !== "undefined" && isEditing
-                                    ? window.print
-                                    : undefined
-                                }
-                              >
-                                <DownloadIcon />
-                              </a>
-                            </Tooltip>
-                            {!isEditing && (
-                              <Tooltip tooltip={"Edit this resume"}>
-                                <a
-                                  style={{ cursor: "pointer" }}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  onClick={() => {
-                                    setIsEditing(!isEditing);
-                                    requestAnimationFrame(() => {
-                                      const firstHeader =
-                                        document.querySelector("h1");
-                                      if (firstHeader) firstHeader.focus();
-                                    });
-                                  }}
-                                >
-                                  <EditIcon />
-                                </a>
-                              </Tooltip>
-                            )}
-                            {isEditing && (
-                              <Tooltip tooltip={"Save Changes"}>
-                                <a
-                                  style={{ cursor: "pointer" }}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  onClick={() => {
-                                    setIsEditing(!isEditing);
-                                    if (onSave) onSave(values);
-                                  }}
-                                >
-                                  <SaveSvgIcon />
-                                </a>
-                              </Tooltip>
-                            )}
-                            {isEditing && (
-                              <Tooltip tooltip={"Discard Changes"}>
-                                <a
-                                  style={{ cursor: "pointer" }}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  onClick={() => {
-                                    setIsEditing(!isEditing);
-                                    if (onReset) onReset();
-                                  }}
-                                >
-                                  <CloseSvgIcon />
-                                </a>
-                              </Tooltip>
-                            )}
-                            <Tooltip tooltip="View source">
-                              <a
-                                style={{ cursor: "pointer" }}
-                                target="_blank"
-                                rel="noreferrer"
-                                href="https://github.com/guyathomas/guythomas.me"
-                              >
-                                <GithubIcon />
-                              </a>
-                            </Tooltip>
-                            <Tooltip
-                              tooltip={`Toggle ${
-                                isDarkMode ? "light" : "dark"
-                              } mode`}
-                            >
-                              <DarkModeToggleAction />
-                            </Tooltip>
-                          </ResumeActionContainer>
                         </DescriptionRow>
                       </Titles>
                       <Contacts>

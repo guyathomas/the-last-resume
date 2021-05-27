@@ -154,9 +154,16 @@ export const ContactTitle = styled.h4`
   }
 `;
 
+export const AvatarImage = styled.img`
+  max-width: 100%;
+  max-height: 100%;
+`;
+
 export const FirstName = styled.h1`
   font-weight: bold;
   margin: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 2.5rem;
   @media print {
     font-weight: initial;
   }
@@ -243,13 +250,6 @@ export const Names = styled.div`
   }
 `;
 
-export const ResumeActionContainer = styled.div`
-  display: flex;
-  margin-top: 1.5rem;
-  @media print {
-    display: none;
-  }
-`;
 interface SectionButtonProps {
   actionType?: "positive" | "negative";
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Resume from "components/Resume";
 import { Banner, BannerButton } from "components/Banner";
+import { useRouter } from "next/dist/client/router";
 
 const guy = {
   id: "b7d91036-4df9-5d06-82a5-0d46589ea95d",
@@ -62,7 +63,7 @@ const guy = {
   ],
   avatar:
     "https://res.cloudinary.com/dqvlfpaev/image/upload/c_scale,w_400/v1580691840/avatar_sz1jui.jpg",
-  firstName: "Test",
+  firstName: "Guy",
   lastName: "Thomas",
 };
 
@@ -103,12 +104,17 @@ interface ResumePageProps {
 const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const [customResume, setCustomResume] = React.useState();
   const [isEditing, setIsEditing] = React.useState(false);
+  const { isFallback } = useRouter();
+
   const resetChanges = React.useCallback(() => {
     setCustomResume(undefined);
   }, [setCustomResume]);
+
+  if (isFallback) return <div>⏳</div>;
   if (!resume) return <h1>No resume found 😢</h1>;
+
   return (
-    <h1>
+    <>
       {!isEditing && customResume && (
         <Banner>
           You have modified this resume, but no one else can see the changes.
@@ -130,7 +136,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
         onReset={resetChanges}
         onEdit={setIsEditing}
       />
-    </h1>
+    </>
   );
 };
 
