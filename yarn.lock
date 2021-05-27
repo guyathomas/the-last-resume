@@ -1056,6 +1056,16 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@fontsource/open-sans@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/open-sans/-/open-sans-4.4.0.tgz#35c914f9d694f8edeecb241a0ec75181dc12eabc"
+  integrity sha512-BuCgcH70BTPAE0/j/ipM0wtyXQayjmc+AXr2an3KTPg5QDZyENeWHrSRzx4wzsNizcx7uMdsqi0R99u284DQAQ==
+
+"@fontsource/work-sans@^4.4.0":
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/work-sans/-/work-sans-4.4.0.tgz#d22ef5938f84698423309385ac2d2d62522bf864"
+  integrity sha512-wWc9jyX3gEnH/GhOMwQyw288T9r9rkzcea7D2YW5HmRqpjb6L22YwWYAGHPR+eZyfiJI0T32qWxeLL6Pyd9hjQ==
+
 "@hapi/accept@5.0.2":
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/@hapi/accept/-/accept-5.0.2.tgz#ab7043b037e68b722f93f376afb05e85c0699523"

@@ -1,9 +1,6 @@
 import React from "react";
 import { COLOR_PALETTE } from "styles";
-import styled from "@emotion/react";
-import Head from "next/head";
-import { Global, css } from "@emotion/react";
-
+import GlobalStyles from "./GlobalStyles";
 interface ThemeProviderProps {
   children: React.ReactNode;
 }
@@ -80,60 +77,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
         toggleColorMode,
       }}
     >
-      <Global
-        styles={{
-          body: {
-            fontSize: "100%",
-            lineHeight: 1.75,
-            fontFamily: `'Work Sans', serif`,
-            color: COLOR_PALETTE.primary.color,
-            fontWeight: 400,
-            margin: 0,
-            boxSizing: "border-box",
-          },
-          "*, *::before, *::after": {
-            boxSizing: "border-box",
-          },
-          "h1, h2, h3, h4, h5, h6": {
-            fontWeight: 300,
-            fontFamily: `'Work Sans', serif`,
-            marginTop: "3.5rem",
-            lineHeight: "initial",
-          },
-          ul: {
-            listStyle: "disc",
-          },
-          "ul,ol": {
-            marginLeft: 0,
-            listStylePosition: "inside",
-          },
-          h4: {
-            letterSpacing: "0.140625em",
-            textTransform: "uppercase",
-          },
-          h6: {
-            fontStyle: "italic",
-          },
-          a: {
-            color: COLOR_PALETTE.interactive.color,
-            textDecoration: "none",
-          },
-          "a:hover,a:active": {
-            boxShadow: "none",
-            color: COLOR_PALETTE.interactiveActive.color,
-          },
-        }}
-      />
-      <Head>
-        <link
-          href={`https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,400;0,700;1,100;1,400;1,700&display=swap`}
-          rel="stylesheet"
-        />
-        <link
-          href={`https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap`}
-          rel="stylesheet"
-        />
-      </Head>
+      <GlobalStyles />
       {children}
     </ThemeContext.Provider>
   );
