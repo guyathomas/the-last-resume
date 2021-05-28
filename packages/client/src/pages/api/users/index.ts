@@ -18,7 +18,7 @@ async function upsertUser(request: NextApiRequest, response: NextApiResponse) {
     const auth_id = user_id || id // auth0 is sending these values inconsistently
     if (!auth_id) response.status(422).end()
     const result = await sql`
-        insert into app_public.users ( auth_id, email )
+        INSERT INTO app_public.users ( auth_id, email )
         VALUES (${auth_id}, ${email})
         ON CONFLICT ( auth_id )
         DO NOTHING;
