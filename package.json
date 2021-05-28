@@ -5,11 +5,15 @@
         "packages/*"
     ],
     "scripts": {
-        "dev": "yarn workspace @the-last-resume/client dev",
-        "build": "yarn workspace @the-last-resume/client build",
-        "start": "yarn workspace @the-last-resume/client start"
+        "dev": "concurrently \"yarn client dev\" \"yarn db dev\"",
+        "build": "yarn db build && yarn client build",
+        "start": "yarn client start",
+        "____": "echo \"Below are shortcuts in the references\"",
+        "client": "yarn workspace @the-last-resume/client",
+        "db": "yarn workspace @the-last-resume/db"
     },
     "devDependencies": {
+        "concurrently": "^6.2.0",
         "eslint": "^7.27.0",
         "prettier": "^2.3.0"
     }
