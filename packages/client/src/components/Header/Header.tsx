@@ -8,12 +8,16 @@ import {
 } from "@material-ui/core";
 
 export const Header: FC = () => {
-  const { isAuthenticated, loginWithPopup } = useAuth0()
+  const { isAuthenticated, loginWithPopup, logout } = useAuth0()
   return (
     <AppBar position="static">
       <Toolbar>
         <Typography>The Last Resume</Typography>
-        {!isAuthenticated && <Button onClick={loginWithPopup} sx={{ marginLeft: 'auto' }} color="inherit">Login</Button>}
+        {
+          isAuthenticated ?
+            <Button onClick={() => logout({ returnTo: window.location.origin })} sx={{ marginLeft: 'auto' }} color="inherit">Logout</Button> :
+            <Button onClick={loginWithPopup} sx={{ marginLeft: 'auto' }} color="inherit">Login</Button>
+        }
       </Toolbar>
     </AppBar>
   );
