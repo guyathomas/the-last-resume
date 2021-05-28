@@ -1,7 +1,7 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Resume from "components/Resume";
-import { Banner, BannerButton } from "components/Banner";
+import { Banner } from "components/Banner";
 import { useRouter } from "next/dist/client/router";
 
 const guy = {
@@ -118,14 +118,6 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
       {!isEditing && customResume && (
         <Banner>
           You have modified this resume, but no one else can see the changes.
-          <BannerButton onClick={resetChanges}>Discard Changes</BannerButton>
-          <BannerButton
-            onClick={() => {
-              typeof window !== "undefined" && window.print();
-            }}
-          >
-            Print Resume
-          </BannerButton>
         </Banner>
       )}
       <Resume

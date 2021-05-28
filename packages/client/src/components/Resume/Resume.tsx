@@ -2,12 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Timeline from "./Timeline";
 import {
-  DownloadIcon,
-  EditIcon,
-  GithubIcon,
   InteractiveSvgStyles,
-  SaveSvgIcon,
-  CloseSvgIcon,
 } from "./svgs";
 import {
   PageContainer,
@@ -35,14 +30,9 @@ import {
   Background,
   AvatarImage,
 } from "./styles";
-import { DarkModeToggle } from "components/DarkModeToggle";
 import { ThemeContext } from "context/ThemeProvider";
 import { Formik, Form, FieldArray, Field } from "formik";
-import { Banner, BannerButton } from "components/Banner";
-
-const DarkModeToggleAction = styled(DarkModeToggle)`
-  ${InteractiveSvgStyles}
-`;
+import { Banner } from "components/Banner";
 
 const DEFAULT_AVATAR_URL =
   "https://e7.pngegg.com/pngimages/84/165/png-clipart-united-states-avatar-organization-information-user-avatar-service-computer-wallpaper.png";
@@ -82,29 +72,14 @@ const Resume: React.FC<{
         {({ values, setFieldValue }) => {
           const createOnInput =
             (name: keyof ResumeJSON) =>
-            (event: React.FormEvent<HTMLElement>) => {
-              setFieldValue(String(name), event.currentTarget.innerText);
-            };
+              (event: React.FormEvent<HTMLElement>) => {
+                setFieldValue(String(name), event.currentTarget.innerText);
+              };
           return (
             <>
               {isEditing && (
                 <Banner>
                   You are editing this resume. Changes are only on this device.
-                  <BannerButton
-                    onClick={() => {
-                      setIsEditing(!isEditing);
-                      if (onSave) onSave(values);
-                    }}
-                  >
-                    Save Changes
-                  </BannerButton>
-                  <BannerButton
-                    onClick={() => {
-                      setIsEditing(!isEditing);
-                    }}
-                  >
-                    Stop Editing
-                  </BannerButton>
                 </Banner>
               )}
               <Form>
