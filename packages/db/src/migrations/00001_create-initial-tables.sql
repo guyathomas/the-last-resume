@@ -26,9 +26,8 @@ DROP TABLE IF EXISTS app_public.resume_views;
 
 CREATE TABLE app_public.users (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc (),
-  auth_id varchar(80) NOT NULL,
-  username varchar(80),
-  email citext,
+  auth_id varchar(80) NOT NULL UNIQUE,
+  email citext UNIQUE,
   created_at timestamp DEFAULT now(),
   updated_at timestamp DEFAULT now()
 );

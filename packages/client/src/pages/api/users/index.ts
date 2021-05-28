@@ -13,12 +13,15 @@ function protectAuth0Handler(request: NextApiRequest, response: NextApiResponse)
     if (isAuthorizedRequest) response.status(401).end()
 }
 
-async function createUser(request: NextApiRequest, response: NextApiResponse) {
+async function upsertUser(request: NextApiRequest, response: NextApiResponse) {
     const { user_id, email, id } = request.body?.event?.user || {}
     const auth_id = user_id || id // auth0 is sending these values inconsistently
     if (!auth_id) response.status(422).end()
     const result = await sql`
-        insert into app_public.users ( auth_id, email ) VALUES (${auth_id}, ${email});
+        insert into app_public.users ( auth_id, email )
+        VALUES (${auth_id}, ${email})
+        ON CONFLICT ( auth_id )
+        DO NOTHING;
     `
     response.send(result)
 }
@@ -28,7 +31,7 @@ export default function (request: NextApiRequest, response: NextApiResponse) {
         switch (request.method) {
           case "POST": {
             protectAuth0Handler(request, response)
-            createUser(request, response)
+            upsertUser(request, response)
             break;
           }
           default: {
