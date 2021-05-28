@@ -1,18 +1,22 @@
 {
     "compilerOptions": {
-        "noEmit": true,
         "baseUrl": "src",
+        "outDir": "dist",
         "esModuleInterop": true,
         "lib": [
           "dom",
           "dom.iterable",
           "esnext"
         ],
+        "target": "ESNext",
         "allowJs": false,
         "skipLibCheck": true,
         "strict": true,
         "module": "CommonJS",
         "moduleResolution": "node",
-        "isolatedModules": true
-    }   
+        "isolatedModules": true,
+        "declaration": true
+    },
+    "exclude": ["dist", "src/scripts"],
+    "include": ["src"]
 }

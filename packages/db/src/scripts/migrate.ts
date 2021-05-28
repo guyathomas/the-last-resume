@@ -1,6 +1,6 @@
 import path from 'path';
 import { migrate } from "postgres-migrations"
-import { createClient } from './connection'
+import { createClient } from '../createClient'
 
 async function main() {
     const client = await createClient()

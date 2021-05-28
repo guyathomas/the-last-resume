@@ -1,5 +1,6 @@
 import { createDb } from "postgres-migrations"
-import { createClient, connectionConfig } from './connection'
+import { createClient } from '../createClient'
+import { connectionConfig } from '../connectionConfig'
 
 async function main() {
     const client = await createClient({ init: true })

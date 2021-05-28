@@ -7,6 +7,9 @@ CREATE SCHEMA app_private;
 
 DROP EXTENSION "uuid-ossp";
 CREATE EXTENSION "uuid-ossp";
+DROP EXTENSION citext;
+CREATE EXTENSION citext;
+
 
 -- Triggers
 CREATE OR REPLACE FUNCTION app_private.create_timestamp_trigger() RETURNS trigger AS $$
@@ -23,8 +26,9 @@ DROP TABLE IF EXISTS app_public.resume_views;
 
 CREATE TABLE app_public.users (
   id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc (),
-  full_name varchar(80) NOT NULL,
   auth_id varchar(80) NOT NULL,
+  username varchar(80),
+  email citext,
   created_at timestamp DEFAULT now(),
   updated_at timestamp DEFAULT now()
 );

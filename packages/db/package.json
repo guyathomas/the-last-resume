@@ -2,9 +2,14 @@
     "name": "@the-last-resume/db",
     "version": "0.0.0",
     "private": true,
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
     "scripts": {
-        "init-pg": "ts-node ./src/init-db",
-        "migrate": "ts-node ./src/migrate"
+        "init-pg": "ts-node ./src/scripts/init-db",
+        "migrate": "ts-node ./src/scripts/migrate",
+        "build": "tsc",
+        "dev": "yarn build --watch"
+
     },
     "dependencies": {
         "pg": "^8.6.0",
