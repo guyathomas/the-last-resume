@@ -2,7 +2,10 @@
     "name": "@the-last-resume/db",
     "version": "0.0.0",
     "private": true,
-    "scripts": {},
+    "scripts": {
+        "init-pg": "ts-node ./src/init-db",
+        "migrate": "ts-node ./src/migrate"
+    },
     "dependencies": {
         "pg": "^8.6.0",
         "postgres-migrations": "^5.1.1"

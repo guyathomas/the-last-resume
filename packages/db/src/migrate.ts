@@ -1,10 +1,11 @@
+import path from 'path';
 import { migrate } from "postgres-migrations"
 import { createClient } from './connection'
 
 async function main() {
     const client = await createClient()
     try {
-      await migrate({client}, "migrations")
+      await migrate({client}, path.resolve("src/migrations"))
     } finally {
       await client.end()
     }
