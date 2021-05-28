@@ -1,10 +1,14 @@
 import { FC } from "react";
-import { ThemeProvider } from "context/ThemeProvider";
 import { AppProps } from "next/app";
+import { ThemeProvider } from "context/ThemeProvider";
+import { AppLayout } from "context/AppLayout";
+
 const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <ThemeProvider>
-      <Component {...pageProps} />
+      <AppLayout>
+        <Component {...pageProps} />
+      </AppLayout>
     </ThemeProvider>
   );
 };

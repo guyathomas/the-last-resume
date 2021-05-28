@@ -1,31 +1,14 @@
+import Link, { LinkProps } from "next/link";
 import React from "react";
-import styled from "@emotion/styled";
-import { COLOR_PALETTE } from "styles";
 
-interface ButtonLinkProps {
-  children: React.ReactNode;
-  onClick?: () => void;
-  className?: string;
-}
-const ButtonLinkWrapper = styled.button`
-  cursor: pointer;
-  border: none;
-  white-space: nowrap;
-  background-color: ${COLOR_PALETTE.backgroundPrimary.color};
-  color: ${COLOR_PALETTE.interactive.color};
-  &:hover {
-    color: ${COLOR_PALETTE.interactiveActive.color};
-  }
-`;
-
-const ButtonLink: React.FC<ButtonLinkProps> = ({
-  children,
-  onClick,
-  className,
-}) => (
-  <ButtonLinkWrapper className={className} onClick={onClick}>
-    {children}
-  </ButtonLinkWrapper>
+/*
+    When next/link is passed into LinkComponent for the Button, it's passed two children - which throws an exception.
+    This is a lightweight wrapper to pass it just an `a` tag like it is expecting
+*/
+const ButtonLink: React.FC<LinkProps> = ({ children, href, ...props }) => (
+  <Link href={href}>
+    <a {...props}>{children}</a>
+  </Link>
 );
 
 export default ButtonLink;
