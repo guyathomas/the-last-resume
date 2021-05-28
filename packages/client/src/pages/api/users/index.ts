@@ -13,10 +13,10 @@ function protectAuth0Handler(request: NextApiRequest, response: NextApiResponse)
 }
 
 async function createUser(request: NextApiRequest, response: NextApiResponse) {
-    const { id, username, email } = request.body?.event?.user || {}
-    if (!id) response.status(422).end()
+    const { user_id, username, email } = request.body?.event?.user || {}
+    if (!user_id) response.status(422).end()
     await sql`
-        insert into app_public.users ( auth_id, username, email ) VALUES (${id}, ${username}, ${email});
+        insert into app_public.users ( auth_id, username, email ) VALUES (${user_id}, ${username}, ${email});
     `
     response.status(200).end()
 }
