@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import postgres from 'postgres';
 
 import { connectionConfig } from '@the-last-resume/db'
+
 const sql = postgres(connectionConfig)
 
 function protectAuth0Handler(request: NextApiRequest, response: NextApiResponse){
@@ -13,12 +14,13 @@ function protectAuth0Handler(request: NextApiRequest, response: NextApiResponse)
 }
 
 async function createUser(request: NextApiRequest, response: NextApiResponse) {
-    const { user_id, username, email } = request.body?.event?.user || {}
-    if (!user_id) response.status(422).end()
-    await sql`
-        insert into app_public.users ( auth_id, username, email ) VALUES (${user_id}, ${username}, ${email});
+    const { user_id, email, id } = request.body?.event?.user || {}
+    const auth_id = user_id || id // auth0 is sending these values inconsistently
+    if (!auth_id) response.status(422).end()
+    const result = await sql`
+        insert into app_public.users ( auth_id, email ) VALUES (${auth_id}, ${email});
     `
-    response.status(200).end()
+    response.send(result)
 }
 
 export default function (request: NextApiRequest, response: NextApiResponse) {
