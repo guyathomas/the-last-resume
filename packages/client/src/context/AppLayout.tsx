@@ -1,17 +1,15 @@
 import LayoutForPath, { LayoutSpec } from '@guyathomas/layout-for-path'
 
 import { AuthGuard } from 'components/AuthGuard'
+import { Header } from 'components/Header'
 import { useRouter } from "next/router";
 
 const NoLayout: React.FC = ({ children }) => <>{children}</>
-const Header: React.FC = () => <>Header</>
-const Footer: React.FC = () => <>Footer</>
 
 const MainLayout: React.FC = ({ children }) => (
   <>
     <Header />
     {children}
-    <Footer />
   </>
 )
 
