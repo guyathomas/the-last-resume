@@ -2,15 +2,19 @@ import React from 'react';
 import { Auth0Provider } from '@auth0/auth0-react'
 
 export const AuthProvider: React.FC = ({ children }) => {
-    if (!process.env.REACT_APP_AUTH0_DOMAIN || !process.env.REACT_APP_AUTH0_CLIENT_ID) {
+    if (!process.env.NEXT_PUBLIC_AUTH0_DOMAIN || !process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID) {
         console.error('No auth config found, not returning context')
         return <>{children}</>
     }
-    return (
+    const redirectUri = typeof window === 'undefined' ?
+        process.env.NEXT_PUBLIC_AUTH0_REDIRECT_URL :
+        window.location.origin;
+    
+        return (
         <Auth0Provider
-            domain={process.env.REACT_APP_AUTH0_DOMAIN}
-            clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-            redirectUri={window.location.origin}
+            domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
+            clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
+            redirectUri={redirectUri}
         >
             {children}
         </Auth0Provider>

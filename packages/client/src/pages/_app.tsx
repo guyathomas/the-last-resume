@@ -1,16 +1,19 @@
 import { FC } from "react";
 import { AppProps } from "next/app";
 import { ThemeProvider } from "context/ThemeProvider";
+import { AuthProvider } from "context/AuthProvider";
 import { AppLayout } from "context/AppLayout";
 
-const MyApp: FC<AppProps> = ({ Component, pageProps }) => {
+const NextApp: FC<AppProps> = ({ Component, pageProps }) => {
   return (
-    <ThemeProvider>
-      <AppLayout>
-        <Component {...pageProps} />
-      </AppLayout>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
+      </ThemeProvider>
+    </AuthProvider>
   );
 };
 
-export default MyApp;
+export default NextApp;
