@@ -8,5 +8,9 @@
         "dev": "yarn workspace @the-last-resume/client dev",
         "build": "yarn workspace @the-last-resume/client build",
         "start": "yarn workspace @the-last-resume/client start"
+    },
+    "devDependencies": {
+        "eslint": "^7.27.0",
+        "prettier": "^2.3.0"
     }
 }
