@@ -1,0 +1,1302 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+"""
+columns and relationships of "app_public.resume_views"
+"""
+type app_public_resume_views {
+  created_at: timestamp
+  id: uuid!
+
+  """An object relationship"""
+  resume: app_public_resumes
+  resume_id: uuid
+  updated_at: timestamp
+}
+
+"""
+aggregated selection of "app_public.resume_views"
+"""
+type app_public_resume_views_aggregate {
+  aggregate: app_public_resume_views_aggregate_fields
+  nodes: [app_public_resume_views!]!
+}
+
+"""
+aggregate fields of "app_public.resume_views"
+"""
+type app_public_resume_views_aggregate_fields {
+  count(columns: [app_public_resume_views_select_column!], distinct: Boolean): Int!
+  max: app_public_resume_views_max_fields
+  min: app_public_resume_views_min_fields
+}
+
+"""
+order by aggregate values of table "app_public.resume_views"
+"""
+input app_public_resume_views_aggregate_order_by {
+  count: order_by
+  max: app_public_resume_views_max_order_by
+  min: app_public_resume_views_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "app_public.resume_views"
+"""
+input app_public_resume_views_arr_rel_insert_input {
+  data: [app_public_resume_views_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: app_public_resume_views_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "app_public.resume_views". All fields are combined with a logical 'AND'.
+"""
+input app_public_resume_views_bool_exp {
+  _and: [app_public_resume_views_bool_exp!]
+  _not: app_public_resume_views_bool_exp
+  _or: [app_public_resume_views_bool_exp!]
+  created_at: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  resume: app_public_resumes_bool_exp
+  resume_id: uuid_comparison_exp
+  updated_at: timestamp_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "app_public.resume_views"
+"""
+enum app_public_resume_views_constraint {
+  """unique or primary key constraint"""
+  resume_views_pkey
+}
+
+"""
+input type for inserting data into table "app_public.resume_views"
+"""
+input app_public_resume_views_insert_input {
+  created_at: timestamp
+  id: uuid
+  resume: app_public_resumes_obj_rel_insert_input
+  resume_id: uuid
+  updated_at: timestamp
+}
+
+"""aggregate max on columns"""
+type app_public_resume_views_max_fields {
+  created_at: timestamp
+  id: uuid
+  resume_id: uuid
+  updated_at: timestamp
+}
+
+"""
+order by max() on columns of table "app_public.resume_views"
+"""
+input app_public_resume_views_max_order_by {
+  created_at: order_by
+  id: order_by
+  resume_id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type app_public_resume_views_min_fields {
+  created_at: timestamp
+  id: uuid
+  resume_id: uuid
+  updated_at: timestamp
+}
+
+"""
+order by min() on columns of table "app_public.resume_views"
+"""
+input app_public_resume_views_min_order_by {
+  created_at: order_by
+  id: order_by
+  resume_id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "app_public.resume_views"
+"""
+type app_public_resume_views_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [app_public_resume_views!]!
+}
+
+"""
+on conflict condition type for table "app_public.resume_views"
+"""
+input app_public_resume_views_on_conflict {
+  constraint: app_public_resume_views_constraint!
+  update_columns: [app_public_resume_views_update_column!]! = []
+  where: app_public_resume_views_bool_exp
+}
+
+"""Ordering options when selecting data from "app_public.resume_views"."""
+input app_public_resume_views_order_by {
+  created_at: order_by
+  id: order_by
+  resume: app_public_resumes_order_by
+  resume_id: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: app_public_resume_views"""
+input app_public_resume_views_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "app_public.resume_views"
+"""
+enum app_public_resume_views_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  resume_id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "app_public.resume_views"
+"""
+input app_public_resume_views_set_input {
+  created_at: timestamp
+  id: uuid
+  resume_id: uuid
+  updated_at: timestamp
+}
+
+"""
+update columns of table "app_public.resume_views"
+"""
+enum app_public_resume_views_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  resume_id
+
+  """column name"""
+  updated_at
+}
+
+"""
+columns and relationships of "app_public.resumes"
+"""
+type app_public_resumes {
+  created_at: timestamp
+  id: uuid!
+  resume_data(
+    """JSON select path"""
+    path: String
+  ): json
+
+  """An array relationship"""
+  resume_views(
+    """distinct select on columns"""
+    distinct_on: [app_public_resume_views_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resume_views_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resume_views_bool_exp
+  ): [app_public_resume_views!]!
+
+  """An aggregate relationship"""
+  resume_views_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_resume_views_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resume_views_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resume_views_bool_exp
+  ): app_public_resume_views_aggregate!
+  updated_at: timestamp
+
+  """An object relationship"""
+  user: app_public_users
+  user_id: uuid
+}
+
+"""
+aggregated selection of "app_public.resumes"
+"""
+type app_public_resumes_aggregate {
+  aggregate: app_public_resumes_aggregate_fields
+  nodes: [app_public_resumes!]!
+}
+
+"""
+aggregate fields of "app_public.resumes"
+"""
+type app_public_resumes_aggregate_fields {
+  count(columns: [app_public_resumes_select_column!], distinct: Boolean): Int!
+  max: app_public_resumes_max_fields
+  min: app_public_resumes_min_fields
+}
+
+"""
+order by aggregate values of table "app_public.resumes"
+"""
+input app_public_resumes_aggregate_order_by {
+  count: order_by
+  max: app_public_resumes_max_order_by
+  min: app_public_resumes_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "app_public.resumes"
+"""
+input app_public_resumes_arr_rel_insert_input {
+  data: [app_public_resumes_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: app_public_resumes_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "app_public.resumes". All fields are combined with a logical 'AND'.
+"""
+input app_public_resumes_bool_exp {
+  _and: [app_public_resumes_bool_exp!]
+  _not: app_public_resumes_bool_exp
+  _or: [app_public_resumes_bool_exp!]
+  created_at: timestamp_comparison_exp
+  id: uuid_comparison_exp
+  resume_data: json_comparison_exp
+  resume_views: app_public_resume_views_bool_exp
+  updated_at: timestamp_comparison_exp
+  user: app_public_users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "app_public.resumes"
+"""
+enum app_public_resumes_constraint {
+  """unique or primary key constraint"""
+  resumes_pkey
+}
+
+"""
+input type for inserting data into table "app_public.resumes"
+"""
+input app_public_resumes_insert_input {
+  created_at: timestamp
+  id: uuid
+  resume_data: json
+  resume_views: app_public_resume_views_arr_rel_insert_input
+  updated_at: timestamp
+  user: app_public_users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type app_public_resumes_max_fields {
+  created_at: timestamp
+  id: uuid
+  updated_at: timestamp
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "app_public.resumes"
+"""
+input app_public_resumes_max_order_by {
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type app_public_resumes_min_fields {
+  created_at: timestamp
+  id: uuid
+  updated_at: timestamp
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "app_public.resumes"
+"""
+input app_public_resumes_min_order_by {
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "app_public.resumes"
+"""
+type app_public_resumes_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [app_public_resumes!]!
+}
+
+"""
+input type for inserting object relation for remote table "app_public.resumes"
+"""
+input app_public_resumes_obj_rel_insert_input {
+  data: app_public_resumes_insert_input!
+
+  """on conflict condition"""
+  on_conflict: app_public_resumes_on_conflict
+}
+
+"""
+on conflict condition type for table "app_public.resumes"
+"""
+input app_public_resumes_on_conflict {
+  constraint: app_public_resumes_constraint!
+  update_columns: [app_public_resumes_update_column!]! = []
+  where: app_public_resumes_bool_exp
+}
+
+"""Ordering options when selecting data from "app_public.resumes"."""
+input app_public_resumes_order_by {
+  created_at: order_by
+  id: order_by
+  resume_data: order_by
+  resume_views_aggregate: app_public_resume_views_aggregate_order_by
+  updated_at: order_by
+  user: app_public_users_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: app_public_resumes"""
+input app_public_resumes_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "app_public.resumes"
+"""
+enum app_public_resumes_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  resume_data
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "app_public.resumes"
+"""
+input app_public_resumes_set_input {
+  created_at: timestamp
+  id: uuid
+  resume_data: json
+  updated_at: timestamp
+  user_id: uuid
+}
+
+"""
+update columns of table "app_public.resumes"
+"""
+enum app_public_resumes_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  resume_data
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+columns and relationships of "app_public.users"
+"""
+type app_public_users {
+  auth_id: String!
+  created_at: timestamp
+  email: citext
+  id: uuid!
+
+  """An array relationship"""
+  resumes(
+    """distinct select on columns"""
+    distinct_on: [app_public_resumes_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resumes_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resumes_bool_exp
+  ): [app_public_resumes!]!
+
+  """An aggregate relationship"""
+  resumes_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_resumes_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resumes_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resumes_bool_exp
+  ): app_public_resumes_aggregate!
+  updated_at: timestamp
+}
+
+"""
+aggregated selection of "app_public.users"
+"""
+type app_public_users_aggregate {
+  aggregate: app_public_users_aggregate_fields
+  nodes: [app_public_users!]!
+}
+
+"""
+aggregate fields of "app_public.users"
+"""
+type app_public_users_aggregate_fields {
+  count(columns: [app_public_users_select_column!], distinct: Boolean): Int!
+  max: app_public_users_max_fields
+  min: app_public_users_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "app_public.users". All fields are combined with a logical 'AND'.
+"""
+input app_public_users_bool_exp {
+  _and: [app_public_users_bool_exp!]
+  _not: app_public_users_bool_exp
+  _or: [app_public_users_bool_exp!]
+  auth_id: String_comparison_exp
+  created_at: timestamp_comparison_exp
+  email: citext_comparison_exp
+  id: uuid_comparison_exp
+  resumes: app_public_resumes_bool_exp
+  updated_at: timestamp_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "app_public.users"
+"""
+enum app_public_users_constraint {
+  """unique or primary key constraint"""
+  users_pkey
+
+  """unique or primary key constraint"""
+  users_unique_auth_id
+
+  """unique or primary key constraint"""
+  users_unique_email
+}
+
+"""
+input type for inserting data into table "app_public.users"
+"""
+input app_public_users_insert_input {
+  auth_id: String
+  created_at: timestamp
+  email: citext
+  id: uuid
+  resumes: app_public_resumes_arr_rel_insert_input
+  updated_at: timestamp
+}
+
+"""aggregate max on columns"""
+type app_public_users_max_fields {
+  auth_id: String
+  created_at: timestamp
+  email: citext
+  id: uuid
+  updated_at: timestamp
+}
+
+"""aggregate min on columns"""
+type app_public_users_min_fields {
+  auth_id: String
+  created_at: timestamp
+  email: citext
+  id: uuid
+  updated_at: timestamp
+}
+
+"""
+response of any mutation on the table "app_public.users"
+"""
+type app_public_users_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [app_public_users!]!
+}
+
+"""
+input type for inserting object relation for remote table "app_public.users"
+"""
+input app_public_users_obj_rel_insert_input {
+  data: app_public_users_insert_input!
+
+  """on conflict condition"""
+  on_conflict: app_public_users_on_conflict
+}
+
+"""
+on conflict condition type for table "app_public.users"
+"""
+input app_public_users_on_conflict {
+  constraint: app_public_users_constraint!
+  update_columns: [app_public_users_update_column!]! = []
+  where: app_public_users_bool_exp
+}
+
+"""Ordering options when selecting data from "app_public.users"."""
+input app_public_users_order_by {
+  auth_id: order_by
+  created_at: order_by
+  email: order_by
+  id: order_by
+  resumes_aggregate: app_public_resumes_aggregate_order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: app_public_users"""
+input app_public_users_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "app_public.users"
+"""
+enum app_public_users_select_column {
+  """column name"""
+  auth_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "app_public.users"
+"""
+input app_public_users_set_input {
+  auth_id: String
+  created_at: timestamp
+  email: citext
+  id: uuid
+  updated_at: timestamp
+}
+
+"""
+update columns of table "app_public.users"
+"""
+enum app_public_users_update_column {
+  """column name"""
+  auth_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+scalar citext
+
+"""
+Boolean expression to compare columns of type "citext". All fields are combined with logical 'AND'.
+"""
+input citext_comparison_exp {
+  _eq: citext
+  _gt: citext
+  _gte: citext
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: citext
+  _in: [citext!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: citext
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: citext
+  _lt: citext
+  _lte: citext
+  _neq: citext
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: citext
+  _nin: [citext!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: citext
+
+  """does the column NOT match the given pattern"""
+  _nlike: citext
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: citext
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: citext
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: citext
+
+  """does the column match the given SQL regular expression"""
+  _similar: citext
+}
+
+scalar json
+
+"""
+Boolean expression to compare columns of type "json". All fields are combined with logical 'AND'.
+"""
+input json_comparison_exp {
+  _eq: json
+  _gt: json
+  _gte: json
+  _in: [json!]
+  _is_null: Boolean
+  _lt: json
+  _lte: json
+  _neq: json
+  _nin: [json!]
+}
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "app_public.resume_views"
+  """
+  delete_app_public_resume_views(
+    """filter the rows which have to be deleted"""
+    where: app_public_resume_views_bool_exp!
+  ): app_public_resume_views_mutation_response
+
+  """
+  delete single row from the table: "app_public.resume_views"
+  """
+  delete_app_public_resume_views_by_pk(id: uuid!): app_public_resume_views
+
+  """
+  delete data from the table: "app_public.resumes"
+  """
+  delete_app_public_resumes(
+    """filter the rows which have to be deleted"""
+    where: app_public_resumes_bool_exp!
+  ): app_public_resumes_mutation_response
+
+  """
+  delete single row from the table: "app_public.resumes"
+  """
+  delete_app_public_resumes_by_pk(id: uuid!): app_public_resumes
+
+  """
+  delete data from the table: "app_public.users"
+  """
+  delete_app_public_users(
+    """filter the rows which have to be deleted"""
+    where: app_public_users_bool_exp!
+  ): app_public_users_mutation_response
+
+  """
+  delete single row from the table: "app_public.users"
+  """
+  delete_app_public_users_by_pk(id: uuid!): app_public_users
+
+  """
+  insert data into the table: "app_public.resume_views"
+  """
+  insert_app_public_resume_views(
+    """the rows to be inserted"""
+    objects: [app_public_resume_views_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: app_public_resume_views_on_conflict
+  ): app_public_resume_views_mutation_response
+
+  """
+  insert a single row into the table: "app_public.resume_views"
+  """
+  insert_app_public_resume_views_one(
+    """the row to be inserted"""
+    object: app_public_resume_views_insert_input!
+
+    """on conflict condition"""
+    on_conflict: app_public_resume_views_on_conflict
+  ): app_public_resume_views
+
+  """
+  insert data into the table: "app_public.resumes"
+  """
+  insert_app_public_resumes(
+    """the rows to be inserted"""
+    objects: [app_public_resumes_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: app_public_resumes_on_conflict
+  ): app_public_resumes_mutation_response
+
+  """
+  insert a single row into the table: "app_public.resumes"
+  """
+  insert_app_public_resumes_one(
+    """the row to be inserted"""
+    object: app_public_resumes_insert_input!
+
+    """on conflict condition"""
+    on_conflict: app_public_resumes_on_conflict
+  ): app_public_resumes
+
+  """
+  insert data into the table: "app_public.users"
+  """
+  insert_app_public_users(
+    """the rows to be inserted"""
+    objects: [app_public_users_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: app_public_users_on_conflict
+  ): app_public_users_mutation_response
+
+  """
+  insert a single row into the table: "app_public.users"
+  """
+  insert_app_public_users_one(
+    """the row to be inserted"""
+    object: app_public_users_insert_input!
+
+    """on conflict condition"""
+    on_conflict: app_public_users_on_conflict
+  ): app_public_users
+
+  """
+  update data of the table: "app_public.resume_views"
+  """
+  update_app_public_resume_views(
+    """sets the columns of the filtered rows to the given values"""
+    _set: app_public_resume_views_set_input
+
+    """filter the rows which have to be updated"""
+    where: app_public_resume_views_bool_exp!
+  ): app_public_resume_views_mutation_response
+
+  """
+  update single row of the table: "app_public.resume_views"
+  """
+  update_app_public_resume_views_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: app_public_resume_views_set_input
+    pk_columns: app_public_resume_views_pk_columns_input!
+  ): app_public_resume_views
+
+  """
+  update data of the table: "app_public.resumes"
+  """
+  update_app_public_resumes(
+    """sets the columns of the filtered rows to the given values"""
+    _set: app_public_resumes_set_input
+
+    """filter the rows which have to be updated"""
+    where: app_public_resumes_bool_exp!
+  ): app_public_resumes_mutation_response
+
+  """
+  update single row of the table: "app_public.resumes"
+  """
+  update_app_public_resumes_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: app_public_resumes_set_input
+    pk_columns: app_public_resumes_pk_columns_input!
+  ): app_public_resumes
+
+  """
+  update data of the table: "app_public.users"
+  """
+  update_app_public_users(
+    """sets the columns of the filtered rows to the given values"""
+    _set: app_public_users_set_input
+
+    """filter the rows which have to be updated"""
+    where: app_public_users_bool_exp!
+  ): app_public_users_mutation_response
+
+  """
+  update single row of the table: "app_public.users"
+  """
+  update_app_public_users_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: app_public_users_set_input
+    pk_columns: app_public_users_pk_columns_input!
+  ): app_public_users
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type query_root {
+  """
+  fetch data from the table: "app_public.resume_views"
+  """
+  app_public_resume_views(
+    """distinct select on columns"""
+    distinct_on: [app_public_resume_views_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resume_views_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resume_views_bool_exp
+  ): [app_public_resume_views!]!
+
+  """
+  fetch aggregated fields from the table: "app_public.resume_views"
+  """
+  app_public_resume_views_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_resume_views_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resume_views_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resume_views_bool_exp
+  ): app_public_resume_views_aggregate!
+
+  """
+  fetch data from the table: "app_public.resume_views" using primary key columns
+  """
+  app_public_resume_views_by_pk(id: uuid!): app_public_resume_views
+
+  """
+  fetch data from the table: "app_public.resumes"
+  """
+  app_public_resumes(
+    """distinct select on columns"""
+    distinct_on: [app_public_resumes_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resumes_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resumes_bool_exp
+  ): [app_public_resumes!]!
+
+  """
+  fetch aggregated fields from the table: "app_public.resumes"
+  """
+  app_public_resumes_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_resumes_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resumes_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resumes_bool_exp
+  ): app_public_resumes_aggregate!
+
+  """
+  fetch data from the table: "app_public.resumes" using primary key columns
+  """
+  app_public_resumes_by_pk(id: uuid!): app_public_resumes
+
+  """
+  fetch data from the table: "app_public.users"
+  """
+  app_public_users(
+    """distinct select on columns"""
+    distinct_on: [app_public_users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_users_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_users_bool_exp
+  ): [app_public_users!]!
+
+  """
+  fetch aggregated fields from the table: "app_public.users"
+  """
+  app_public_users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_users_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_users_bool_exp
+  ): app_public_users_aggregate!
+
+  """
+  fetch data from the table: "app_public.users" using primary key columns
+  """
+  app_public_users_by_pk(id: uuid!): app_public_users
+}
+
+type subscription_root {
+  """
+  fetch data from the table: "app_public.resume_views"
+  """
+  app_public_resume_views(
+    """distinct select on columns"""
+    distinct_on: [app_public_resume_views_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resume_views_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resume_views_bool_exp
+  ): [app_public_resume_views!]!
+
+  """
+  fetch aggregated fields from the table: "app_public.resume_views"
+  """
+  app_public_resume_views_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_resume_views_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resume_views_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resume_views_bool_exp
+  ): app_public_resume_views_aggregate!
+
+  """
+  fetch data from the table: "app_public.resume_views" using primary key columns
+  """
+  app_public_resume_views_by_pk(id: uuid!): app_public_resume_views
+
+  """
+  fetch data from the table: "app_public.resumes"
+  """
+  app_public_resumes(
+    """distinct select on columns"""
+    distinct_on: [app_public_resumes_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resumes_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resumes_bool_exp
+  ): [app_public_resumes!]!
+
+  """
+  fetch aggregated fields from the table: "app_public.resumes"
+  """
+  app_public_resumes_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_resumes_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_resumes_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_resumes_bool_exp
+  ): app_public_resumes_aggregate!
+
+  """
+  fetch data from the table: "app_public.resumes" using primary key columns
+  """
+  app_public_resumes_by_pk(id: uuid!): app_public_resumes
+
+  """
+  fetch data from the table: "app_public.users"
+  """
+  app_public_users(
+    """distinct select on columns"""
+    distinct_on: [app_public_users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_users_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_users_bool_exp
+  ): [app_public_users!]!
+
+  """
+  fetch aggregated fields from the table: "app_public.users"
+  """
+  app_public_users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [app_public_users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [app_public_users_order_by!]
+
+    """filter the rows returned"""
+    where: app_public_users_bool_exp
+  ): app_public_users_aggregate!
+
+  """
+  fetch data from the table: "app_public.users" using primary key columns
+  """
+  app_public_users_by_pk(id: uuid!): app_public_users
+}
+
+scalar timestamp
+
+"""
+Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'.
+"""
+input timestamp_comparison_exp {
+  _eq: timestamp
+  _gt: timestamp
+  _gte: timestamp
+  _in: [timestamp!]
+  _is_null: Boolean
+  _lt: timestamp
+  _lte: timestamp
+  _neq: timestamp
+  _nin: [timestamp!]
+}
+
+scalar uuid
+
+"""
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
