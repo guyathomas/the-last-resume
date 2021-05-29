@@ -29,6 +29,7 @@ import {
   SectionButton,
   Background,
   AvatarImage,
+  ContactDetail,
 } from "./styles";
 import { ThemeContext } from "context/ThemeProvider";
 import { Formik, Form, FieldArray, Field } from "formik";
@@ -49,9 +50,7 @@ const AddSection = styled(SectionButton)`
   top: 30px;
   right: 30px;
 `;
-const noop = () => {
-  return;
-};
+const noop = () => {};
 
 type ResumeJSON = any;
 
@@ -62,7 +61,6 @@ const Resume: React.FC<{
   onEdit?: (isEditing: boolean) => void;
 }> = ({ resumeData, onSave, onReset, onEdit }) => {
   const [isEditing, setIsEditing] = React.useState(false);
-  const { isDarkMode } = React.useContext(ThemeContext);
   React.useEffect(() => {
     if (onEdit) onEdit(isEditing);
   }, [isEditing, onEdit]);
@@ -140,7 +138,7 @@ const Resume: React.FC<{
                             return (
                               <ContactWrapper key={stringTitle}>
                                 <ContactTitle>{stringTitle}</ContactTitle>
-                                <span
+                                <ContactDetail
                                   contentEditable={isEditing}
                                   onInput={(event) => {
                                     setFieldValue(

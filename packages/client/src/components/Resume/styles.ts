@@ -283,3 +283,9 @@ export const Background = styled.div`
     min-height: 100vh;
   }
 `;
+
+export const ContactDetail = styled.span`
+  a, a:active {
+    color: white
+  }
+`
