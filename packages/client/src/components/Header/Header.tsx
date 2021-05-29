@@ -7,10 +7,12 @@ import {
   Toolbar,
 } from "@material-ui/core";
 
+export const HEADER_MAX_HEIGHT = 64;
+
 export const Header: FC = () => {
   const { isAuthenticated, loginWithPopup, logout } = useAuth0()
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ maxHeight: HEADER_MAX_HEIGHT, backgroundColor: 'background.paper' }}>
       <Toolbar>
         <Typography>The Last Resume</Typography>
         {
