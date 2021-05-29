@@ -286,6 +286,6 @@ export const Background = styled.div`
 
 export const ContactDetail = styled.span`
   a, a:active {
-    color: white
+    color: ${() => COLOR_PALETTE.primary.color};
   }
 `
