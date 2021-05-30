@@ -1,7 +1,6 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Resume from "components/Resume";
-import { Banner } from "components/Banner";
 import { useRouter } from "next/dist/client/router";
 import { HEADER_MAX_HEIGHT } from "components/Header";
 import { Container, Typography } from "@material-ui/core";
