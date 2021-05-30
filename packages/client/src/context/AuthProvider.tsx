@@ -15,6 +15,7 @@ export const AuthProvider: React.FC = ({ children }) => {
             domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN}
             clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID}
             redirectUri={redirectUri}
+            audience="hasura"
         >
             {children}
         </Auth0Provider>

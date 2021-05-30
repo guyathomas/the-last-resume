@@ -38,10 +38,13 @@ CREATE TABLE app_public.resumes (
     user_id uuid,
     FOREIGN KEY (user_id) REFERENCES app_public.users (id) ON DELETE CASCADE,
   	resume_data json,
+    slug text NOT NULL UNIQUE,
     created_at timestamp DEFAULT now(),
     updated_at timestamp DEFAULT now()
 );
 CREATE TRIGGER set_timestamp_resumes BEFORE UPDATE ON app_public.resumes FOR EACH ROW EXECUTE PROCEDURE app_private.create_timestamp_trigger();
+CREATE UNIQUE INDEX slug_idx ON app_public.resumes (slug);
+
 
 CREATE TABLE app_public.resume_views (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc (),

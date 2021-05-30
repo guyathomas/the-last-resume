@@ -2,7 +2,13 @@ import { FC } from "react";
 import { Button, Container, Typography, Box } from "@material-ui/core";
 import { HEADER_MAX_HEIGHT } from "components/Header";
 import { useAuth0 } from "@auth0/auth0-react";
-import { ButtonLink } from "components/ButtonLink";
+import { CreateSlug } from "components/CreateSlug";
+
+const newSlug = async (slug: string, resume: any) =>
+  fetch(`/api/resume/${slug}`, {
+    method: "POST",
+    body: JSON.stringify(resume),
+  });
 
 const HomePage: FC = () => {
   const { loginWithPopup, isAuthenticated } = useAuth0();
@@ -22,9 +28,7 @@ const HomePage: FC = () => {
       </Typography>
       <Box mt={3} />
       {isAuthenticated ? (
-        <Button LinkComponent={ButtonLink} href="/my-resume">
-          Edit My Resume
-        </Button>
+        <CreateSlug onSave={newSlug} />
       ) : (
         <Button variant="outlined" color="primary" onClick={loginWithPopup}>
           Get Started

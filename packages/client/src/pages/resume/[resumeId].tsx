@@ -6,6 +6,7 @@ import { HEADER_MAX_HEIGHT } from "components/Header";
 import { Container, Typography } from "@material-ui/core";
 import styled from "@emotion/styled";
 import { keyframes } from "@material-ui/styled-engine";
+import { Form, Formik } from "formik";
 
 const guy = {
   id: "b7d91036-4df9-5d06-82a5-0d46589ea95d",
@@ -85,6 +86,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const resumes = await getResumes();
   const resumeId = Array.isArray(params?.resumeId)
@@ -134,6 +136,7 @@ const Rotate = styled.div`
 
 const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const { isFallback } = useRouter();
+  const [isEditing, setIsEditing] = React.useState(false);
 
   if (isFallback) {
     return (
@@ -151,8 +154,20 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
       </CenterContent>
     );
   }
-
-  return <Resume values={resume} />;
+  if (!isEditing) return <Resume values={resume} />;
+  
+  return (
+    // TODO: Dynamically import this so we don't always load formik
+    <Formik initialValues={resume} onSubmit={() => {}}>
+      {({ values, setFieldValue }) => {
+        return (
+          <Form>
+            <Resume setFieldValue={setFieldValue} values={values} isEditing />
+          </Form>
+        );
+      }}
+    </Formik>
+  );
 };
 
 export default ResumePage;
