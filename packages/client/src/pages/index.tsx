@@ -11,7 +11,7 @@ const newSlug = async (slug: string, resume: any) =>
   });
 
 const HomePage: FC = () => {
-  const { loginWithPopup, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   return (
     <Container
       sx={{
@@ -30,7 +30,7 @@ const HomePage: FC = () => {
       {isAuthenticated ? (
         <CreateSlug onSave={newSlug} />
       ) : (
-        <Button variant="outlined" color="primary" onClick={loginWithPopup}>
+        <Button variant="outlined" color="primary" onClick={loginWithRedirect}>
           Get Started
         </Button>
       )}
