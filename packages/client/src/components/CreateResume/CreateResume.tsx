@@ -1,6 +1,6 @@
 import React from "react";
-import { Field, Form, Formik } from "formik";
-
+import { Field, Form, Formik, useFormikContext } from "formik";
+import { useCreateResumeMutation } from "@the-last-resume/graphql";
 import {
   Box,
   Button,
@@ -25,12 +25,35 @@ interface NewResumeValues {
   slug?: string;
 }
 
-interface CreateSlugProps {
+interface CreateResumeProps {
   onSave: (slug: string, resume: any) => Promise<any>;
 }
+const ResumeSlugField: React.FC = () => {
+  const { setFieldValue, values } = useFormikContext<NewResumeValues>();
+  const inputRef = React.useRef<HTMLSpanElement>(null);
 
-export const CreateSlug: React.FC<CreateSlugProps> = ({ onSave }) => {
+  React.useEffect(() => {
+    inputRef?.current?.focus();
+  }, [inputRef]);
+  return (
+    <Typography
+      ref={inputRef}
+      contentEditable
+      variant="body1"
+      component="span"
+      color="textPrimary"
+      onInput={(event?: React.ChangeEvent<any>) => {
+        setFieldValue("slug", event?.currentTarget?.innerText);
+      }}
+    >
+      {values.slug}
+    </Typography>
+  );
+};
+
+export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
   const router = useRouter();
+  const [createResume, { loading }] = useCreateResumeMutation();
   // TODO: Fetch resumes. If a slug exists, create a button that will send the user there
   return (
     <Formik<NewResumeValues>
@@ -43,7 +66,14 @@ export const CreateSlug: React.FC<CreateSlugProps> = ({ onSave }) => {
           console.error("No slug provided");
           return;
         }
-        await onSave(values.slug, DEFAULT_RESUME);
+        await createResume({
+          variables: {
+            object: {
+              slug: values.slug,
+              resume_data: DEFAULT_RESUME,
+            },
+          },
+        });
         router.push(`/resume/${values.slug}`);
       }}
     >
@@ -56,15 +86,24 @@ export const CreateSlug: React.FC<CreateSlugProps> = ({ onSave }) => {
             justifyContent="center"
           >
             <Typography variant="h5" color="textPrimary">
-              This is unique to your resume and cannot be changed
+              Choose a website name
             </Typography>
             <Box mb={2} />
-            <Field name="slug" as={TextField} label="URL Slug" />
+            <Box>
+              <Typography
+                variant="body1"
+                color="textSecondary"
+                component="span"
+              >
+                thelastresume.com/resume/
+              </Typography>
+              <Field name="slug" as={ResumeSlugField} label="URL Slug" />
+            </Box>
             {Object.values(errors).map((formError) => (
               <FormHelperText error>{formError}</FormHelperText>
             ))}
             <Box mb={2} />
-            <Button variant="outlined" type="submit">
+            <Button variant="outlined" type="submit" disabled={loading}>
               Get Started
             </Button>
           </Box>

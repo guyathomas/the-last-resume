@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Button, Container, Typography, Box } from "@material-ui/core";
 import { HEADER_MAX_HEIGHT } from "components/Header";
 import { useAuth0 } from "@auth0/auth0-react";
-import { CreateSlug } from "components/CreateSlug";
+import { CreateResume } from "components/CreateResume";
 
 const newSlug = async (slug: string, resume: any) =>
   fetch(`/api/resume/${slug}`, {
@@ -28,7 +28,7 @@ const HomePage: FC = () => {
       </Typography>
       <Box mt={3} />
       {isAuthenticated ? (
-        <CreateSlug onSave={newSlug} />
+        <CreateResume onSave={newSlug} />
       ) : (
         <Button variant="outlined" color="primary" onClick={loginWithRedirect}>
           Get Started
