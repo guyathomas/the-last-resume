@@ -3,7 +3,12 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Resume from "components/Resume";
 import { useRouter } from "next/dist/client/router";
 import { HEADER_MAX_HEIGHT } from "components/Header";
-import { Container, Typography } from "@material-ui/core";
+import {
+  Box,
+  CircularProgress,
+  Container,
+  Typography,
+} from "@material-ui/core";
 import styled from "@emotion/styled";
 import { keyframes } from "@material-ui/styled-engine";
 import { Form, Formik } from "formik";
@@ -12,6 +17,11 @@ import {
   useUpdateResumeByIdMutation,
 } from "@the-last-resume/graphql";
 import { useAuth0 } from "@auth0/auth0-react";
+
+import { Fab } from "@material-ui/core";
+
+import SaveIcon from "@material-ui/icons/Save";
+import CheckIcon from "@material-ui/icons/Check";
 
 const fetchGraphqlQuery = (query: string) =>
   fetch(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT!, {
@@ -77,29 +87,26 @@ const CenterContent: React.FC = ({ children }) => (
       flexDirection: "column",
       alignItems: "center",
       backgroundColor: "background.paper",
+      textAlign: "center",
     }}
   >
     {children}
   </Container>
 );
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg) scale(2);
-  }
-  to {
-    transform: rotate(359deg) scale(2);
-  }
-`;
-const Rotate = styled.div`
-  animation: ${rotate} 2s infinite linear;
-  transform-origin: center;
-`;
 
 const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const { isFallback } = useRouter();
   const { user } = useAuth0();
   const [isEditing, setIsEditing] = React.useState(false);
-  const [saveResume] = useUpdateResumeByIdMutation();
+  const [saveResume, { loading: isSaving, data }] =
+    useUpdateResumeByIdMutation();
+  const [showSuccess, setShowSuccess] = React.useState(false);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 3000);
+  }, [data]);
   React.useEffect(() => {
     if (user) {
       const isAuthor =
@@ -112,7 +119,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   if (isFallback) {
     return (
       <CenterContent>
-        <Rotate>⏳</Rotate>
+        <CircularProgress size="5rem" />
       </CenterContent>
     );
   }
@@ -127,27 +134,61 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   }
 
   return (
-    <Formik
-      initialValues={resume.resume_data}
-      onSubmit={(resumeData) => {
-        saveResume({
-          variables: {
-            resumeData,
-            id: resume.id!,
-          },
-        });
-      }}
-    >
-      {({ values, setFieldValue }) => (
-        <Form>
-          <Resume
-            setFieldValue={setFieldValue}
-            values={values}
-            isEditing={isEditing}
-          />
-        </Form>
-      )}
-    </Formik>
+    <>
+      <Formik
+        initialValues={resume.resume_data}
+        onSubmit={async (resumeData) => {
+          await saveResume({
+            variables: {
+              resumeData,
+              id: resume.id!,
+            },
+          });
+          setShowSuccess(true);
+        }}
+      >
+        {({ values, setFieldValue }) => (
+          <Form>
+            {isEditing && (
+              <Box position="fixed" bottom="1rem" right="1rem" zIndex={1}>
+                <Box position="relative">
+                  <Fab
+                    aria-label="save"
+                    color="primary"
+                    type="submit"
+                    disabled={isSaving}
+                    sx={{
+                      backgroundColor: showSuccess ? "green" : undefined,
+                      ":hover": {
+                        backgroundColor: showSuccess ? "green" : undefined,
+                      },
+                    }}
+                  >
+                    {showSuccess ? <CheckIcon /> : <SaveIcon />}
+                  </Fab>
+                  {isSaving && (
+                    <CircularProgress
+                      size={68}
+                      sx={{
+                        position: "absolute",
+                        top: -6,
+                        left: -6,
+                        zIndex: 1,
+                      }}
+                    />
+                  )}
+                </Box>
+              </Box>
+            )}
+            <Resume
+              setFieldValue={setFieldValue}
+              values={values}
+              isEditing={isEditing}
+            />
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
 

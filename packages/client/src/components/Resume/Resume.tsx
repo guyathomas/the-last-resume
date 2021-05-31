@@ -24,14 +24,12 @@ import {
   DescriptionRow,
   Names,
   SectionButton,
-  Background,
   AvatarImage,
   ContactDetail,
 } from "./styles";
 
 import { FieldArray, Field, FormikHelpers } from "formik";
-import { Fab } from "@material-ui/core";
-import { Save as SaveIcon } from "@material-ui/icons";
+
 
 const DEFAULT_AVATAR_URL =
   "https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png";
@@ -52,12 +50,6 @@ const noop = () => {};
 
 type ResumeJSON = any;
 
-const StyledFab = styled(Fab)`
-  position: fixed;
-  bottom: 1rem;
-  right: 1rem;
-  z-index: 10;
-`;
 
 const Resume: React.FC<{
   values: ResumeJSON;
@@ -71,11 +63,6 @@ const Resume: React.FC<{
 
   return (
     <PageContainer>
-      {isEditing && (
-        <StyledFab type="submit" size="large" color="primary" aria-label="save">
-          <SaveIcon />
-        </StyledFab>
-      )}
       <ProfileSection>
         <ProfileContainer>
           {isEditing && (
