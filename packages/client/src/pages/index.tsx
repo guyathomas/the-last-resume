@@ -23,7 +23,7 @@ const HomePage: FC = () => {
         backgroundColor: "background.paper",
       }}
     >
-      <Typography color="textPrimary" variant="h3">
+      <Typography color="textPrimary" variant="h3" textAlign="center">
         The last resume you'll ever need
       </Typography>
       <Box mt={3} />
@@ -31,7 +31,7 @@ const HomePage: FC = () => {
         <CreateResume onSave={newSlug} />
       ) : (
         <Button variant="outlined" color="primary" onClick={loginWithRedirect}>
-          Get Started
+          Create Account
         </Button>
       )}
     </Container>

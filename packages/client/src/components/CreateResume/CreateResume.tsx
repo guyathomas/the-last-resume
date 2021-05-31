@@ -56,8 +56,8 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
   return (
     <Formik<NewResumeValues>
       initialValues={{}}
+      validateOnMount
       validateOnBlur={true}
-      validateOnChange={false}
       validationSchema={newResumeSchema}
       onSubmit={async (values) => {
         if (!values.slug) {
@@ -74,7 +74,7 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
         router.push(`/resume/${slug}`);
       }}
     >
-      {({ errors }) => (
+      {({ errors, isValid, submitCount }) => (
         <Form>
           <Box
             display="flex"
@@ -96,12 +96,16 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
               </Typography>
               <Field name="slug" as={ResumeSlugField} label="URL Slug" />
             </Box>
-            {Object.values(errors).map((formError) => (
+            {!!submitCount && Object.values(errors).map((formError) => (
               <FormHelperText error>{formError}</FormHelperText>
             ))}
             <Box mb={2} />
-            <Button variant="outlined" type="submit" disabled={loading}>
-              Get Started
+            <Button
+              variant="outlined"
+              type="submit"
+              disabled={loading || !isValid}
+            >
+              Create Resume
             </Button>
           </Box>
         </Form>

@@ -72,6 +72,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       resume: resumes.length ? resumes[0] : undefined,
     },
+    revalidate: 1,
   };
 };
 interface ResumePageProps {
