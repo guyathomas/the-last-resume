@@ -299,11 +299,12 @@ type app_public_resumes {
     """filter the rows returned"""
     where: app_public_resume_views_bool_exp
   ): app_public_resume_views_aggregate!
+  slug: String!
   updated_at: timestamp
 
   """An object relationship"""
   user: app_public_users
-  user_id: uuid
+  user_id: String
 }
 
 """
@@ -353,9 +354,10 @@ input app_public_resumes_bool_exp {
   id: uuid_comparison_exp
   resume_data: json_comparison_exp
   resume_views: app_public_resume_views_bool_exp
+  slug: String_comparison_exp
   updated_at: timestamp_comparison_exp
   user: app_public_users_bool_exp
-  user_id: uuid_comparison_exp
+  user_id: String_comparison_exp
 }
 
 """
@@ -364,6 +366,12 @@ unique or primary key constraints on table "app_public.resumes"
 enum app_public_resumes_constraint {
   """unique or primary key constraint"""
   resumes_pkey
+
+  """unique or primary key constraint"""
+  resumes_slug_key
+
+  """unique or primary key constraint"""
+  slug_idx
 }
 
 """
@@ -374,17 +382,19 @@ input app_public_resumes_insert_input {
   id: uuid
   resume_data: json
   resume_views: app_public_resume_views_arr_rel_insert_input
+  slug: String
   updated_at: timestamp
   user: app_public_users_obj_rel_insert_input
-  user_id: uuid
+  user_id: String
 }
 
 """aggregate max on columns"""
 type app_public_resumes_max_fields {
   created_at: timestamp
   id: uuid
+  slug: String
   updated_at: timestamp
-  user_id: uuid
+  user_id: String
 }
 
 """
@@ -393,6 +403,7 @@ order by max() on columns of table "app_public.resumes"
 input app_public_resumes_max_order_by {
   created_at: order_by
   id: order_by
+  slug: order_by
   updated_at: order_by
   user_id: order_by
 }
@@ -401,8 +412,9 @@ input app_public_resumes_max_order_by {
 type app_public_resumes_min_fields {
   created_at: timestamp
   id: uuid
+  slug: String
   updated_at: timestamp
-  user_id: uuid
+  user_id: String
 }
 
 """
@@ -411,6 +423,7 @@ order by min() on columns of table "app_public.resumes"
 input app_public_resumes_min_order_by {
   created_at: order_by
   id: order_by
+  slug: order_by
   updated_at: order_by
   user_id: order_by
 }
@@ -451,6 +464,7 @@ input app_public_resumes_order_by {
   id: order_by
   resume_data: order_by
   resume_views_aggregate: app_public_resume_views_aggregate_order_by
+  slug: order_by
   updated_at: order_by
   user: app_public_users_order_by
   user_id: order_by
@@ -475,6 +489,9 @@ enum app_public_resumes_select_column {
   resume_data
 
   """column name"""
+  slug
+
+  """column name"""
   updated_at
 
   """column name"""
@@ -488,8 +505,9 @@ input app_public_resumes_set_input {
   created_at: timestamp
   id: uuid
   resume_data: json
+  slug: String
   updated_at: timestamp
-  user_id: uuid
+  user_id: String
 }
 
 """
@@ -506,6 +524,9 @@ enum app_public_resumes_update_column {
   resume_data
 
   """column name"""
+  slug
+
+  """column name"""
   updated_at
 
   """column name"""
@@ -516,10 +537,9 @@ enum app_public_resumes_update_column {
 columns and relationships of "app_public.users"
 """
 type app_public_users {
-  auth_id: String!
   created_at: timestamp
   email: citext
-  id: uuid!
+  id: String!
 
   """An array relationship"""
   resumes(
@@ -583,10 +603,9 @@ input app_public_users_bool_exp {
   _and: [app_public_users_bool_exp!]
   _not: app_public_users_bool_exp
   _or: [app_public_users_bool_exp!]
-  auth_id: String_comparison_exp
   created_at: timestamp_comparison_exp
   email: citext_comparison_exp
-  id: uuid_comparison_exp
+  id: String_comparison_exp
   resumes: app_public_resumes_bool_exp
   updated_at: timestamp_comparison_exp
 }
@@ -597,41 +616,32 @@ unique or primary key constraints on table "app_public.users"
 enum app_public_users_constraint {
   """unique or primary key constraint"""
   users_pkey
-
-  """unique or primary key constraint"""
-  users_unique_auth_id
-
-  """unique or primary key constraint"""
-  users_unique_email
 }
 
 """
 input type for inserting data into table "app_public.users"
 """
 input app_public_users_insert_input {
-  auth_id: String
   created_at: timestamp
   email: citext
-  id: uuid
+  id: String
   resumes: app_public_resumes_arr_rel_insert_input
   updated_at: timestamp
 }
 
 """aggregate max on columns"""
 type app_public_users_max_fields {
-  auth_id: String
   created_at: timestamp
   email: citext
-  id: uuid
+  id: String
   updated_at: timestamp
 }
 
 """aggregate min on columns"""
 type app_public_users_min_fields {
-  auth_id: String
   created_at: timestamp
   email: citext
-  id: uuid
+  id: String
   updated_at: timestamp
 }
 
@@ -667,7 +677,6 @@ input app_public_users_on_conflict {
 
 """Ordering options when selecting data from "app_public.users"."""
 input app_public_users_order_by {
-  auth_id: order_by
   created_at: order_by
   email: order_by
   id: order_by
@@ -677,16 +686,13 @@ input app_public_users_order_by {
 
 """primary key columns input for table: app_public_users"""
 input app_public_users_pk_columns_input {
-  id: uuid!
+  id: String!
 }
 
 """
 select columns of table "app_public.users"
 """
 enum app_public_users_select_column {
-  """column name"""
-  auth_id
-
   """column name"""
   created_at
 
@@ -704,10 +710,9 @@ enum app_public_users_select_column {
 input type for updating data in table "app_public.users"
 """
 input app_public_users_set_input {
-  auth_id: String
   created_at: timestamp
   email: citext
-  id: uuid
+  id: String
   updated_at: timestamp
 }
 
@@ -715,9 +720,6 @@ input app_public_users_set_input {
 update columns of table "app_public.users"
 """
 enum app_public_users_update_column {
-  """column name"""
-  auth_id
-
   """column name"""
   created_at
 
@@ -842,7 +844,7 @@ type mutation_root {
   """
   delete single row from the table: "app_public.users"
   """
-  delete_app_public_users_by_pk(id: uuid!): app_public_users
+  delete_app_public_users_by_pk(id: String!): app_public_users
 
   """
   insert data into the table: "app_public.resume_views"
@@ -1126,7 +1128,7 @@ type query_root {
   """
   fetch data from the table: "app_public.users" using primary key columns
   """
-  app_public_users_by_pk(id: uuid!): app_public_users
+  app_public_users_by_pk(id: String!): app_public_users
 }
 
 type subscription_root {
@@ -1263,7 +1265,7 @@ type subscription_root {
   """
   fetch data from the table: "app_public.users" using primary key columns
   """
-  app_public_users_by_pk(id: uuid!): app_public_users
+  app_public_users_by_pk(id: String!): app_public_users
 }
 
 scalar timestamp

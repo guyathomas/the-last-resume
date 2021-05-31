@@ -8,12 +8,13 @@
     "build": "yarn codegen && yarn build-js",
     "build-js": "tsc -b",
     "codegen": "graphql-codegen --config codegen.yml --overwrite",
-    "get-schema": "gq https://thelastresume.hasura.app/v1/graphql --introspect > schema.graphql --header x-hasura-admin-secret:$(grep X-HASURA-ADMIN-SECRET .env | cut -d '=' -f2)",
+    "get-schema": "gq https://thelastresume.hasura.app/v1/graphql --introspect > ./dist/schema.graphql --header x-hasura-admin-secret:$(grep X-HASURA-ADMIN-SECRET .env | cut -d '=' -f2)",
     "dev": "yarn codegen -- --watch & yarn build-js -- --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.3.15",
     "@apollo/react-common": "^3.1.4",
+    "apollo-client": "^2.6.10",
     "graphql": "^15.5.0"
   },
   "devDependencies": {
