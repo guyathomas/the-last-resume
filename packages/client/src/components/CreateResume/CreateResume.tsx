@@ -5,7 +5,8 @@ import { Box, Button, FormHelperText, Typography } from "@material-ui/core";
 import { createResumeData } from "./helpers";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
-const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+const slugRegex = /^( *)[A-z0-9]+(?:-[A-z0-9]+)*( *)$/;
 const newResumeSchema = Yup.object().shape({
   slug: Yup.string()
     .min(6, "Too Short!")
@@ -51,6 +52,7 @@ const ResumeSlugField: React.FC = () => {
 export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
   const router = useRouter();
   const [createResume, { loading }] = useCreateResumeMutation();
+
   return (
     <Formik<NewResumeValues>
       initialValues={{}}
@@ -62,13 +64,14 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
           console.error("No slug provided");
           return;
         }
+        const slug = values.slug.toLocaleLowerCase().trim();
         await createResume({
           variables: {
             resumeData: createResumeData(values.slug),
-            slug: values.slug,
+            slug,
           },
         });
-        router.push(`/resume/${values.slug}`);
+        router.push(`/resume/${slug}`);
       }}
     >
       {({ errors }) => (
