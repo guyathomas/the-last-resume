@@ -10,7 +10,10 @@ import { useRouter } from "next/router";
 import * as Yup from "yup";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ButtonLink } from "components/ButtonLink";
-
+/*
+  * Allow spaces at start and end
+  * allow -, numbers, letters ( any case )
+*/
 const slugRegex = /^( *)[A-z0-9]+(?:-[A-z0-9]+)*( *)$/;
 const newResumeSchema = Yup.object().shape({
   slug: Yup.string()

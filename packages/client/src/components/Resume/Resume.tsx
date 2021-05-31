@@ -29,7 +29,7 @@ import {
 } from "./styles";
 
 import { FieldArray, Field, FormikHelpers } from "formik";
-
+import AddIcon from "@material-ui/icons/Add";
 const DEFAULT_AVATAR_URL =
   "https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png";
 
@@ -148,7 +148,7 @@ const Resume: React.FC<{
                       push(SampleTimeline);
                     }}
                   >
-                    +
+                    <AddIcon />
                   </AddSection>
                 )}
                 {currentValues.experience?.map((item: any, index: any) => {
@@ -188,7 +188,7 @@ const Resume: React.FC<{
                       push(SampleTimeline);
                     }}
                   >
-                    +
+                    <AddIcon />
                   </AddSection>
                 )}
                 {currentValues.education?.map((item: any, index: any) => {

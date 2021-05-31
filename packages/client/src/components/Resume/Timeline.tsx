@@ -4,7 +4,7 @@ import ContentEditable from "react-contenteditable";
 import styled from "@emotion/styled";
 import { CONSTANTS } from "styles";
 import { SectionButton } from "./styles";
-
+import RemoveIcon from "@material-ui/icons/Remove";
 interface TimelineProps {
   date?: string;
   company?: string;
@@ -109,7 +109,7 @@ const Timeline: React.FC<TimelineProps> = ({
     <TimelineOuter className={className}>
       {contentEditable && (
         <RemoveSection type="button" onClick={onRemove} actionType="negative">
-          -
+          <RemoveIcon />
         </RemoveSection>
       )}
       <TimelineTitles>
