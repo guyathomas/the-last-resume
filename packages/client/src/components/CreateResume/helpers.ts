@@ -1,4 +1,4 @@
-export const DEFAULT_RESUME = {
+export const createResumeData = (slug: string) =>({
   id: "b7d91036-4df9-5d06-82a5-0d46589ea95d",
   version: 1,
   tagline: "A good place for a catchy tagline",
@@ -7,7 +7,7 @@ export const DEFAULT_RESUME = {
   contactDetails: [
     ["Email", "youremail@domain.com"],
     ["Location", "San Francisco"],
-    ["Web", "thelastresume.com/resume/my-slug"],
+    ["Web", `thelastresume.com/resume/${slug}`],
   ],
   experience: [
     {
@@ -28,4 +28,4 @@ export const DEFAULT_RESUME = {
     "https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png",
   firstName: "First Name",
   lastName: "Last Name",
-};
+});

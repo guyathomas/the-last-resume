@@ -1676,7 +1676,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "args": [],
             "type": {
@@ -2061,7 +2061,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
@@ -2197,7 +2197,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -2267,7 +2267,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "args": [],
             "type": {
@@ -2339,7 +2339,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -2409,7 +2409,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "args": [],
             "type": {
@@ -2481,7 +2481,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -2741,7 +2741,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "type": {
               "kind": "ENUM",
@@ -2823,7 +2823,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -2898,7 +2898,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": null,
             "type": {
               "kind": "SCALAR",
@@ -2953,7 +2953,7 @@
             "deprecationReason": null
           },
           {
-            "name": "user_id",
+            "name": "user_auth_id",
             "description": "column name",
             "isDeprecated": false,
             "deprecationReason": null
@@ -2966,6 +2966,22 @@
         "name": "app_public_users",
         "description": "columns and relationships of \"app_public.users\"",
         "fields": [
+          {
+            "name": "auth_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "created_at",
             "description": null,
@@ -2999,7 +3015,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "uuid",
                 "ofType": null
               }
             },
@@ -3408,6 +3424,18 @@
             "deprecationReason": null
           },
           {
+            "name": "auth_id",
+            "description": null,
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "String_comparison_exp",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "created_at",
             "description": null,
             "type": {
@@ -3436,7 +3464,7 @@
             "description": null,
             "type": {
               "kind": "INPUT_OBJECT",
-              "name": "String_comparison_exp",
+              "name": "uuid_comparison_exp",
               "ofType": null
             },
             "defaultValue": null,
@@ -3481,6 +3509,12 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "users_auth_id_key",
+            "description": "unique or primary key constraint",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "users_pkey",
             "description": "unique or primary key constraint",
             "isDeprecated": false,
@@ -3495,6 +3529,18 @@
         "description": "input type for inserting data into table \"app_public.users\"",
         "fields": null,
         "inputFields": [
+          {
+            "name": "auth_id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "created_at",
             "description": null,
@@ -3524,7 +3570,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "uuid",
               "ofType": null
             },
             "defaultValue": null,
@@ -3566,6 +3612,18 @@
         "description": "aggregate max on columns",
         "fields": [
           {
+            "name": "auth_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "created_at",
             "description": null,
             "args": [],
@@ -3595,7 +3653,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "uuid",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3625,6 +3683,18 @@
         "description": "aggregate min on columns",
         "fields": [
           {
+            "name": "auth_id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "created_at",
             "description": null,
             "args": [],
@@ -3654,7 +3724,7 @@
             "args": [],
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "uuid",
               "ofType": null
             },
             "isDeprecated": false,
@@ -3838,6 +3908,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "auth_id",
+            "description": null,
+            "type": {
+              "kind": "ENUM",
+              "name": "order_by",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "created_at",
             "description": null,
             "type": {
@@ -3916,7 +3998,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "String",
+                "name": "uuid",
                 "ofType": null
               }
             },
@@ -3937,6 +4019,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "auth_id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "created_at",
             "description": "column name",
@@ -3971,6 +4059,18 @@
         "fields": null,
         "inputFields": [
           {
+            "name": "auth_id",
+            "description": null,
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "created_at",
             "description": null,
             "type": {
@@ -3999,7 +4099,7 @@
             "description": null,
             "type": {
               "kind": "SCALAR",
-              "name": "String",
+              "name": "uuid",
               "ofType": null
             },
             "defaultValue": null,
@@ -4031,6 +4131,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "auth_id",
+            "description": "column name",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "created_at",
             "description": "column name",
@@ -4630,7 +4736,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "uuid",
                     "ofType": null
                   }
                 },
@@ -5873,7 +5979,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "uuid",
                     "ofType": null
                   }
                 },
@@ -6553,7 +6659,7 @@
                   "name": null,
                   "ofType": {
                     "kind": "SCALAR",
-                    "name": "String",
+                    "name": "uuid",
                     "ofType": null
                   }
                 },

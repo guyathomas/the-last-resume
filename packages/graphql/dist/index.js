@@ -55,7 +55,7 @@ export var App_Public_Resumes_Select_Column;
     /** column name */
     App_Public_Resumes_Select_Column["UpdatedAt"] = "updated_at";
     /** column name */
-    App_Public_Resumes_Select_Column["UserId"] = "user_id";
+    App_Public_Resumes_Select_Column["UserAuthId"] = "user_auth_id";
 })(App_Public_Resumes_Select_Column || (App_Public_Resumes_Select_Column = {}));
 /** update columns of table "app_public.resumes" */
 export var App_Public_Resumes_Update_Column;
@@ -71,17 +71,21 @@ export var App_Public_Resumes_Update_Column;
     /** column name */
     App_Public_Resumes_Update_Column["UpdatedAt"] = "updated_at";
     /** column name */
-    App_Public_Resumes_Update_Column["UserId"] = "user_id";
+    App_Public_Resumes_Update_Column["UserAuthId"] = "user_auth_id";
 })(App_Public_Resumes_Update_Column || (App_Public_Resumes_Update_Column = {}));
 /** unique or primary key constraints on table "app_public.users" */
 export var App_Public_Users_Constraint;
 (function (App_Public_Users_Constraint) {
+    /** unique or primary key constraint */
+    App_Public_Users_Constraint["UsersAuthIdKey"] = "users_auth_id_key";
     /** unique or primary key constraint */
     App_Public_Users_Constraint["UsersPkey"] = "users_pkey";
 })(App_Public_Users_Constraint || (App_Public_Users_Constraint = {}));
 /** select columns of table "app_public.users" */
 export var App_Public_Users_Select_Column;
 (function (App_Public_Users_Select_Column) {
+    /** column name */
+    App_Public_Users_Select_Column["AuthId"] = "auth_id";
     /** column name */
     App_Public_Users_Select_Column["CreatedAt"] = "created_at";
     /** column name */
@@ -94,6 +98,8 @@ export var App_Public_Users_Select_Column;
 /** update columns of table "app_public.users" */
 export var App_Public_Users_Update_Column;
 (function (App_Public_Users_Update_Column) {
+    /** column name */
+    App_Public_Users_Update_Column["AuthId"] = "auth_id";
     /** column name */
     App_Public_Users_Update_Column["CreatedAt"] = "created_at";
     /** column name */
@@ -121,8 +127,8 @@ export var Order_By;
 })(Order_By || (Order_By = {}));
 export const CreateResumeDocument = gql `
     mutation CreateResume($slug: String!, $resumeData: json!) {
-  insert_app_public_resumes_one(object: {slug: $slug, resume_data: $resumeData}) {
-    id
+  insert_app_public_resumes(objects: [{slug: $slug, resume_data: $resumeData}]) {
+    affected_rows
   }
 }
     `;

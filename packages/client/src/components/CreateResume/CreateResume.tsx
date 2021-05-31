@@ -1,17 +1,10 @@
 import React from "react";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import { useCreateResumeMutation } from "@the-last-resume/graphql";
-import {
-  Box,
-  Button,
-  FormHelperText,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { DEFAULT_RESUME } from "./constants";
+import { useCreateResumeMutation } from "@the-last-resume/graphql/dist";
+import { Box, Button, FormHelperText, Typography } from "@material-ui/core";
+import { createResumeData } from "./helpers";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
-
 const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const newResumeSchema = Yup.object().shape({
   slug: Yup.string()
@@ -29,32 +22,35 @@ interface CreateResumeProps {
   onSave: (slug: string, resume: any) => Promise<any>;
 }
 const ResumeSlugField: React.FC = () => {
-  const { setFieldValue, values } = useFormikContext<NewResumeValues>();
+  const { setFieldValue, errors } = useFormikContext<NewResumeValues>();
   const inputRef = React.useRef<HTMLSpanElement>(null);
 
   React.useEffect(() => {
     inputRef?.current?.focus();
   }, [inputRef]);
+
   return (
     <Typography
+      marginLeft={0.5}
+      minWidth={50}
       ref={inputRef}
+      border={errors?.slug && "1px solid red"}
+      borderRadius={2}
+      display="inline-block"
       contentEditable
       variant="body1"
       component="span"
       color="textPrimary"
-      onInput={(event?: React.ChangeEvent<any>) => {
+      onInput={(event: React.ChangeEvent<any>) => {
         setFieldValue("slug", event?.currentTarget?.innerText);
       }}
-    >
-      {values.slug}
-    </Typography>
+    />
   );
 };
 
 export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
   const router = useRouter();
   const [createResume, { loading }] = useCreateResumeMutation();
-  // TODO: Fetch resumes. If a slug exists, create a button that will send the user there
   return (
     <Formik<NewResumeValues>
       initialValues={{}}
@@ -68,10 +64,8 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
         }
         await createResume({
           variables: {
-            object: {
-              slug: values.slug,
-              resume_data: DEFAULT_RESUME,
-            },
+            resumeData: createResumeData(values.slug),
+            slug: values.slug,
           },
         });
         router.push(`/resume/${values.slug}`);
@@ -95,7 +89,7 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
                 color="textSecondary"
                 component="span"
               >
-                thelastresume.com/resume/
+                {`${process.env.NEXT_PUBLIC_CLIENT_URL}/resume/`}
               </Typography>
               <Field name="slug" as={ResumeSlugField} label="URL Slug" />
             </Box>

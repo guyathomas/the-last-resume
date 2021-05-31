@@ -1,8 +1,7 @@
 mutation CreateResume($slug: String!, $resumeData: json!) {
-  insert_app_public_resumes_one(object: {
-    slug: $slug,
-    resume_data: $resumeData
-  }) {
-    id
+  insert_app_public_resumes(
+    objects: [{ slug: $slug, resume_data: $resumeData }]
+  ) {
+    affected_rows
   }
 }

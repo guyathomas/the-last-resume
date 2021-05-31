@@ -2,12 +2,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const hasuraEnvName = "X-HASURA-ADMIN-SECRET"
-
-const hasuraSecret = process.env[hasuraEnvName];
+const hasuraSecret = process.env.HASURA_ADMIN_SECRET;
 
 if (!hasuraSecret){
-    console.warn(`${hasuraEnvName} is not set`)
+    console.warn(`HASURA_ADMIN_SECRET is not set`)
 }
 
 module.exports = {

@@ -219,7 +219,7 @@ export declare type App_Public_Resumes = {
     updated_at?: Maybe<Scalars['timestamp']>;
     /** An object relationship */
     user?: Maybe<App_Public_Users>;
-    user_id?: Maybe<Scalars['String']>;
+    user_auth_id?: Maybe<Scalars['String']>;
 };
 /** columns and relationships of "app_public.resumes" */
 export declare type App_Public_ResumesResume_DataArgs = {
@@ -283,7 +283,7 @@ export declare type App_Public_Resumes_Bool_Exp = {
     slug?: Maybe<String_Comparison_Exp>;
     updated_at?: Maybe<Timestamp_Comparison_Exp>;
     user?: Maybe<App_Public_Users_Bool_Exp>;
-    user_id?: Maybe<String_Comparison_Exp>;
+    user_auth_id?: Maybe<String_Comparison_Exp>;
 };
 /** unique or primary key constraints on table "app_public.resumes" */
 export declare enum App_Public_Resumes_Constraint {
@@ -303,7 +303,7 @@ export declare type App_Public_Resumes_Insert_Input = {
     slug?: Maybe<Scalars['String']>;
     updated_at?: Maybe<Scalars['timestamp']>;
     user?: Maybe<App_Public_Users_Obj_Rel_Insert_Input>;
-    user_id?: Maybe<Scalars['String']>;
+    user_auth_id?: Maybe<Scalars['String']>;
 };
 /** aggregate max on columns */
 export declare type App_Public_Resumes_Max_Fields = {
@@ -312,7 +312,7 @@ export declare type App_Public_Resumes_Max_Fields = {
     id?: Maybe<Scalars['uuid']>;
     slug?: Maybe<Scalars['String']>;
     updated_at?: Maybe<Scalars['timestamp']>;
-    user_id?: Maybe<Scalars['String']>;
+    user_auth_id?: Maybe<Scalars['String']>;
 };
 /** order by max() on columns of table "app_public.resumes" */
 export declare type App_Public_Resumes_Max_Order_By = {
@@ -320,7 +320,7 @@ export declare type App_Public_Resumes_Max_Order_By = {
     id?: Maybe<Order_By>;
     slug?: Maybe<Order_By>;
     updated_at?: Maybe<Order_By>;
-    user_id?: Maybe<Order_By>;
+    user_auth_id?: Maybe<Order_By>;
 };
 /** aggregate min on columns */
 export declare type App_Public_Resumes_Min_Fields = {
@@ -329,7 +329,7 @@ export declare type App_Public_Resumes_Min_Fields = {
     id?: Maybe<Scalars['uuid']>;
     slug?: Maybe<Scalars['String']>;
     updated_at?: Maybe<Scalars['timestamp']>;
-    user_id?: Maybe<Scalars['String']>;
+    user_auth_id?: Maybe<Scalars['String']>;
 };
 /** order by min() on columns of table "app_public.resumes" */
 export declare type App_Public_Resumes_Min_Order_By = {
@@ -337,7 +337,7 @@ export declare type App_Public_Resumes_Min_Order_By = {
     id?: Maybe<Order_By>;
     slug?: Maybe<Order_By>;
     updated_at?: Maybe<Order_By>;
-    user_id?: Maybe<Order_By>;
+    user_auth_id?: Maybe<Order_By>;
 };
 /** response of any mutation on the table "app_public.resumes" */
 export declare type App_Public_Resumes_Mutation_Response = {
@@ -368,7 +368,7 @@ export declare type App_Public_Resumes_Order_By = {
     slug?: Maybe<Order_By>;
     updated_at?: Maybe<Order_By>;
     user?: Maybe<App_Public_Users_Order_By>;
-    user_id?: Maybe<Order_By>;
+    user_auth_id?: Maybe<Order_By>;
 };
 /** primary key columns input for table: app_public_resumes */
 export declare type App_Public_Resumes_Pk_Columns_Input = {
@@ -387,7 +387,7 @@ export declare enum App_Public_Resumes_Select_Column {
     /** column name */
     UpdatedAt = "updated_at",
     /** column name */
-    UserId = "user_id"
+    UserAuthId = "user_auth_id"
 }
 /** input type for updating data in table "app_public.resumes" */
 export declare type App_Public_Resumes_Set_Input = {
@@ -396,7 +396,7 @@ export declare type App_Public_Resumes_Set_Input = {
     resume_data?: Maybe<Scalars['json']>;
     slug?: Maybe<Scalars['String']>;
     updated_at?: Maybe<Scalars['timestamp']>;
-    user_id?: Maybe<Scalars['String']>;
+    user_auth_id?: Maybe<Scalars['String']>;
 };
 /** update columns of table "app_public.resumes" */
 export declare enum App_Public_Resumes_Update_Column {
@@ -411,14 +411,15 @@ export declare enum App_Public_Resumes_Update_Column {
     /** column name */
     UpdatedAt = "updated_at",
     /** column name */
-    UserId = "user_id"
+    UserAuthId = "user_auth_id"
 }
 /** columns and relationships of "app_public.users" */
 export declare type App_Public_Users = {
     __typename?: 'app_public_users';
+    auth_id: Scalars['String'];
     created_at?: Maybe<Scalars['timestamp']>;
     email?: Maybe<Scalars['citext']>;
-    id: Scalars['String'];
+    id: Scalars['uuid'];
     /** An array relationship */
     resumes: Array<App_Public_Resumes>;
     /** An aggregate relationship */
@@ -464,39 +465,45 @@ export declare type App_Public_Users_Bool_Exp = {
     _and?: Maybe<Array<App_Public_Users_Bool_Exp>>;
     _not?: Maybe<App_Public_Users_Bool_Exp>;
     _or?: Maybe<Array<App_Public_Users_Bool_Exp>>;
+    auth_id?: Maybe<String_Comparison_Exp>;
     created_at?: Maybe<Timestamp_Comparison_Exp>;
     email?: Maybe<Citext_Comparison_Exp>;
-    id?: Maybe<String_Comparison_Exp>;
+    id?: Maybe<Uuid_Comparison_Exp>;
     resumes?: Maybe<App_Public_Resumes_Bool_Exp>;
     updated_at?: Maybe<Timestamp_Comparison_Exp>;
 };
 /** unique or primary key constraints on table "app_public.users" */
 export declare enum App_Public_Users_Constraint {
     /** unique or primary key constraint */
+    UsersAuthIdKey = "users_auth_id_key",
+    /** unique or primary key constraint */
     UsersPkey = "users_pkey"
 }
 /** input type for inserting data into table "app_public.users" */
 export declare type App_Public_Users_Insert_Input = {
+    auth_id?: Maybe<Scalars['String']>;
     created_at?: Maybe<Scalars['timestamp']>;
     email?: Maybe<Scalars['citext']>;
-    id?: Maybe<Scalars['String']>;
+    id?: Maybe<Scalars['uuid']>;
     resumes?: Maybe<App_Public_Resumes_Arr_Rel_Insert_Input>;
     updated_at?: Maybe<Scalars['timestamp']>;
 };
 /** aggregate max on columns */
 export declare type App_Public_Users_Max_Fields = {
     __typename?: 'app_public_users_max_fields';
+    auth_id?: Maybe<Scalars['String']>;
     created_at?: Maybe<Scalars['timestamp']>;
     email?: Maybe<Scalars['citext']>;
-    id?: Maybe<Scalars['String']>;
+    id?: Maybe<Scalars['uuid']>;
     updated_at?: Maybe<Scalars['timestamp']>;
 };
 /** aggregate min on columns */
 export declare type App_Public_Users_Min_Fields = {
     __typename?: 'app_public_users_min_fields';
+    auth_id?: Maybe<Scalars['String']>;
     created_at?: Maybe<Scalars['timestamp']>;
     email?: Maybe<Scalars['citext']>;
-    id?: Maybe<Scalars['String']>;
+    id?: Maybe<Scalars['uuid']>;
     updated_at?: Maybe<Scalars['timestamp']>;
 };
 /** response of any mutation on the table "app_public.users" */
@@ -521,6 +528,7 @@ export declare type App_Public_Users_On_Conflict = {
 };
 /** Ordering options when selecting data from "app_public.users". */
 export declare type App_Public_Users_Order_By = {
+    auth_id?: Maybe<Order_By>;
     created_at?: Maybe<Order_By>;
     email?: Maybe<Order_By>;
     id?: Maybe<Order_By>;
@@ -529,10 +537,12 @@ export declare type App_Public_Users_Order_By = {
 };
 /** primary key columns input for table: app_public_users */
 export declare type App_Public_Users_Pk_Columns_Input = {
-    id: Scalars['String'];
+    id: Scalars['uuid'];
 };
 /** select columns of table "app_public.users" */
 export declare enum App_Public_Users_Select_Column {
+    /** column name */
+    AuthId = "auth_id",
     /** column name */
     CreatedAt = "created_at",
     /** column name */
@@ -544,13 +554,16 @@ export declare enum App_Public_Users_Select_Column {
 }
 /** input type for updating data in table "app_public.users" */
 export declare type App_Public_Users_Set_Input = {
+    auth_id?: Maybe<Scalars['String']>;
     created_at?: Maybe<Scalars['timestamp']>;
     email?: Maybe<Scalars['citext']>;
-    id?: Maybe<Scalars['String']>;
+    id?: Maybe<Scalars['uuid']>;
     updated_at?: Maybe<Scalars['timestamp']>;
 };
 /** update columns of table "app_public.users" */
 export declare enum App_Public_Users_Update_Column {
+    /** column name */
+    AuthId = "auth_id",
     /** column name */
     CreatedAt = "created_at",
     /** column name */
@@ -666,7 +679,7 @@ export declare type Mutation_RootDelete_App_Public_UsersArgs = {
 };
 /** mutation root */
 export declare type Mutation_RootDelete_App_Public_Users_By_PkArgs = {
-    id: Scalars['String'];
+    id: Scalars['uuid'];
 };
 /** mutation root */
 export declare type Mutation_RootInsert_App_Public_Resume_ViewsArgs = {
@@ -813,7 +826,7 @@ export declare type Query_RootApp_Public_Users_AggregateArgs = {
     where?: Maybe<App_Public_Users_Bool_Exp>;
 };
 export declare type Query_RootApp_Public_Users_By_PkArgs = {
-    id: Scalars['String'];
+    id: Scalars['uuid'];
 };
 export declare type Subscription_Root = {
     __typename?: 'subscription_root';
@@ -885,7 +898,7 @@ export declare type Subscription_RootApp_Public_Users_AggregateArgs = {
     where?: Maybe<App_Public_Users_Bool_Exp>;
 };
 export declare type Subscription_RootApp_Public_Users_By_PkArgs = {
-    id: Scalars['String'];
+    id: Scalars['uuid'];
 };
 /** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
 export declare type Timestamp_Comparison_Exp = {
@@ -918,9 +931,9 @@ export declare type CreateResumeMutationVariables = Exact<{
 export declare type CreateResumeMutation = ({
     __typename?: 'mutation_root';
 } & {
-    insert_app_public_resumes_one?: Maybe<({
-        __typename?: 'app_public_resumes';
-    } & Pick<App_Public_Resumes, 'id'>)>;
+    insert_app_public_resumes?: Maybe<({
+        __typename?: 'app_public_resumes_mutation_response';
+    } & Pick<App_Public_Resumes_Mutation_Response, 'affected_rows'>)>;
 });
 export declare const CreateResumeDocument: ApolloReactHooks.DocumentNode;
 export declare type CreateResumeMutationFn = ApolloReactCommon.MutationFunction<CreateResumeMutation, CreateResumeMutationVariables>;
