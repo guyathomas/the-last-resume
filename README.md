@@ -22,8 +22,8 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 
 ## TODO:
+* Don't allow removing experience / education when there is only 1 item
 * Script to backup hasura config
 * Implement view counter
-* Don't allow removing experience / education when there is only 1 item
 * Abstract the "Save" button into its own component
 * Make it easier to create more resumes

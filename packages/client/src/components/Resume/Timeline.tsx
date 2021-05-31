@@ -5,6 +5,9 @@ import styled from "@emotion/styled";
 import { CONSTANTS } from "styles";
 import { SectionButton } from "./styles";
 import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+import { Box } from "@material-ui/core";
+
 interface TimelineProps {
   date?: string;
   company?: string;
@@ -13,6 +16,7 @@ interface TimelineProps {
   className?: string;
   contentEditable?: boolean;
   onRemove?: () => void;
+  onAdd?: () => void;
   onChange?: (fieldValue: TimelineFieldNames, value: string) => void;
 }
 
@@ -84,16 +88,21 @@ const TimelineDetailsContent = styled(ContentEditable)`
 `;
 
 const RemoveSection = styled(SectionButton)`
-  position: absolute;
-  right: 14px;
-  top: 30px;
-  @media ${CONSTANTS.DESKTOP} {
-    right: -50px;
-    top: 20px;
-  }
+  top: 3rem;
 `;
 
+const AddSection = styled(SectionButton)``;
+
 type TimelineFieldNames = any;
+
+const ActionContainer = styled(Box)`
+  position: absolute;
+  top: 0;
+  right: 2rem;
+  @media ${CONSTANTS.DESKTOP} {
+    right: -2rem;
+  }
+`;
 
 const Timeline: React.FC<TimelineProps> = ({
   date = "",
@@ -103,14 +112,20 @@ const Timeline: React.FC<TimelineProps> = ({
   className = "",
   contentEditable = false,
   onRemove,
+  onAdd,
   onChange,
 }) => {
   return (
     <TimelineOuter className={className}>
       {contentEditable && (
-        <RemoveSection type="button" onClick={onRemove} actionType="negative">
-          <RemoveIcon />
-        </RemoveSection>
+        <ActionContainer>
+          <AddSection type="button" onClick={onAdd}>
+            <AddIcon />
+          </AddSection>
+          <RemoveSection type="button" onClick={onRemove} actionType="negative">
+            <RemoveIcon />
+          </RemoveSection>
+        </ActionContainer>
       )}
       <TimelineTitles>
         <TimelineCompany

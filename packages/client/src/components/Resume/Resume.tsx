@@ -41,10 +41,6 @@ const SampleTimeline = {
     "List of details<ul><li>First</li><li>Second</li><li>Third</li></ul>",
 };
 
-const AddSection = styled(SectionButton)`
-  top: 30px;
-  right: 30px;
-`;
 const noop = () => {};
 
 type ResumeJSON = any;
@@ -139,39 +135,30 @@ const Resume: React.FC<{
       <ExperienceSection>
         <SectionContentInner>
           <FieldArray name="experience">
-            {({ remove, push }) => (
-              <>
-                {isEditing && (
-                  <AddSection
-                    type="button"
-                    onClick={() => {
+            {({ remove, push }) =>
+              currentValues.experience?.map((item: any, index: any) => {
+                const name = `experience[${index}]`;
+                return (
+                  <Timeline
+                    onRemove={() => {
+                      remove(index);
+                    }}
+                    onAdd={() => {
                       push(SampleTimeline);
                     }}
-                  >
-                    <AddIcon />
-                  </AddSection>
-                )}
-                {currentValues.experience?.map((item: any, index: any) => {
-                  const name = `experience[${index}]`;
-                  return (
-                    <Timeline
-                      onRemove={() => {
-                        remove(index);
-                      }}
-                      onChange={(fieldValue, value) => {
-                        setFieldValue(`${name}.${String(fieldValue)}`, value);
-                      }}
-                      contentEditable={isEditing}
-                      company={item?.company || ""}
-                      title={item?.title || ""}
-                      date={item?.date || ""}
-                      details={item?.details || ""}
-                      key={index}
-                    />
-                  );
-                })}
-              </>
-            )}
+                    onChange={(fieldValue, value) => {
+                      setFieldValue(`${name}.${String(fieldValue)}`, value);
+                    }}
+                    contentEditable={isEditing}
+                    company={item?.company || ""}
+                    title={item?.title || ""}
+                    date={item?.date || ""}
+                    details={item?.details || ""}
+                    key={index}
+                  />
+                );
+              })
+            }
           </FieldArray>
         </SectionContentInner>
       </ExperienceSection>
@@ -179,39 +166,30 @@ const Resume: React.FC<{
       <EducationSection>
         <SectionContentInner>
           <FieldArray name="education">
-            {({ remove, push }) => (
-              <>
-                {isEditing && (
-                  <AddSection
-                    type="button"
-                    onClick={() => {
+            {({ remove, push }) =>
+              currentValues.education?.map((item: any, index: any) => {
+                const name = `education[${index}]`;
+                return (
+                  <Timeline
+                    onRemove={() => {
+                      remove(index);
+                    }}
+                    onChange={(fieldValue, value) => {
+                      setFieldValue(`${name}.${String(fieldValue)}`, value);
+                    }}
+                    onAdd={() => {
                       push(SampleTimeline);
                     }}
-                  >
-                    <AddIcon />
-                  </AddSection>
-                )}
-                {currentValues.education?.map((item: any, index: any) => {
-                  const name = `education[${index}]`;
-                  return (
-                    <Timeline
-                      onRemove={() => {
-                        remove(index);
-                      }}
-                      onChange={(fieldValue, value) => {
-                        setFieldValue(`${name}.${String(fieldValue)}`, value);
-                      }}
-                      contentEditable={isEditing}
-                      key={index}
-                      company={item?.company || ""}
-                      title={item?.title || ""}
-                      date={item?.date || ""}
-                      details={item?.details || ""}
-                    />
-                  );
-                })}
-              </>
-            )}
+                    contentEditable={isEditing}
+                    key={index}
+                    company={item?.company || ""}
+                    title={item?.title || ""}
+                    date={item?.date || ""}
+                    details={item?.details || ""}
+                  />
+                );
+              })
+            }
           </FieldArray>
         </SectionContentInner>
       </EducationSection>
