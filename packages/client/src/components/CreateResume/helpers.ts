@@ -19,9 +19,9 @@ export const createResumeData = (slug: string) =>({
   ],
   education: [
     {
-      company: "School or Project Name",
-      title: "Degree or Project Details",
-      details: "Describe major accomplishments in the degree or project",
+      company: "School Name",
+      title: "Degree Name",
+      details: "Describe major accomplishments in the degree",
     },
   ],
   avatar:

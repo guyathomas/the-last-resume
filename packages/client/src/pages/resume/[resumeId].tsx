@@ -147,7 +147,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
           setShowSuccess(true);
         }}
       >
-        {({ values, setFieldValue }) => (
+        {({ setFieldValue, values }) => (
           <Form>
             {isEditing && (
               <Box position="fixed" bottom="1rem" right="1rem" zIndex={1}>
@@ -181,8 +181,9 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
               </Box>
             )}
             <Resume
+              currentValues={values}
               setFieldValue={setFieldValue}
-              values={values}
+              values={resume.resume_data}
               isEditing={isEditing}
             />
           </Form>

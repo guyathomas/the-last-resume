@@ -108,7 +108,7 @@ const Timeline: React.FC<TimelineProps> = ({
   return (
     <TimelineOuter className={className}>
       {contentEditable && (
-        <RemoveSection onClick={onRemove} actionType="negative">
+        <RemoveSection type="button" onClick={onRemove} actionType="negative">
           -
         </RemoveSection>
       )}

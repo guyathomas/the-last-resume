@@ -30,7 +30,6 @@ import {
 
 import { FieldArray, Field, FormikHelpers } from "formik";
 
-
 const DEFAULT_AVATAR_URL =
   "https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png";
 
@@ -50,12 +49,12 @@ const noop = () => {};
 
 type ResumeJSON = any;
 
-
 const Resume: React.FC<{
   values: ResumeJSON;
+  currentValues: ResumeJSON;
   isEditing?: boolean;
   setFieldValue?: FormikHelpers<ResumeJSON>["setFieldValue"];
-}> = ({ values, isEditing, setFieldValue = noop }) => {
+}> = ({ values, isEditing, setFieldValue = noop, currentValues }) => {
   const createOnInput =
     (name: keyof ResumeJSON) => (event: React.FormEvent<HTMLElement>) => {
       setFieldValue(String(name), event.currentTarget.innerText);
@@ -118,10 +117,9 @@ const Resume: React.FC<{
                         event.currentTarget.innerText
                       );
                     }}
-                    dangerouslySetInnerHTML={{
-                      __html: stringDetail,
-                    }}
-                  />
+                  >
+                    {stringDetail}
+                  </ContactDetail>
                 </ContactWrapper>
               );
             })}
@@ -145,6 +143,7 @@ const Resume: React.FC<{
               <>
                 {isEditing && (
                   <AddSection
+                    type="button"
                     onClick={() => {
                       push(SampleTimeline);
                     }}
@@ -152,7 +151,7 @@ const Resume: React.FC<{
                     +
                   </AddSection>
                 )}
-                {values.experience?.map((item: any, index: any) => {
+                {currentValues.experience?.map((item: any, index: any) => {
                   const name = `experience[${index}]`;
                   return (
                     <Timeline
@@ -184,6 +183,7 @@ const Resume: React.FC<{
               <>
                 {isEditing && (
                   <AddSection
+                    type="button"
                     onClick={() => {
                       push(SampleTimeline);
                     }}
@@ -191,7 +191,7 @@ const Resume: React.FC<{
                     +
                   </AddSection>
                 )}
-                {values.education?.map((item: any, index: any) => {
+                {currentValues.education?.map((item: any, index: any) => {
                   const name = `education[${index}]`;
                   return (
                     <Timeline
