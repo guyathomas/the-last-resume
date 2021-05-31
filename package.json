@@ -11,7 +11,7 @@
         "____": "echo \"Below are shortcuts in the references\"",
         "client": "yarn workspace @the-last-resume/client",
         "db": "yarn workspace @the-last-resume/db",
-        "graphql": "yarn workspace @the-last-resume/db"
+        "graphql": "yarn workspace @the-last-resume/graphql"
     },
     "devDependencies": {
         "concurrently": "^6.2.0",
