@@ -140,6 +140,7 @@ const Resume: React.FC<{
                 const name = `experience[${index}]`;
                 return (
                   <Timeline
+                    disableRemove={index === 0}
                     onRemove={() => {
                       remove(index);
                     }}
@@ -162,7 +163,7 @@ const Resume: React.FC<{
           </FieldArray>
         </SectionContentInner>
       </ExperienceSection>
-      <EducationTitle>Projects</EducationTitle>
+      <EducationTitle>Education</EducationTitle>
       <EducationSection>
         <SectionContentInner>
           <FieldArray name="education">
@@ -174,6 +175,7 @@ const Resume: React.FC<{
                     onRemove={() => {
                       remove(index);
                     }}
+                    disableRemove={index === 0}
                     onChange={(fieldValue, value) => {
                       setFieldValue(`${name}.${String(fieldValue)}`, value);
                     }}
