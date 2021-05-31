@@ -122,23 +122,22 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
       </CenterContent>
     );
   }
-  if (!isEditing) return <Resume values={resume.resume_data} />;
-
   return (
-    // TODO: Dynamically import this so we don't always load formik
     <Formik
       initialValues={resume.resume_data}
       onSubmit={() => {
-        console.log("zzz TODO:");
+        console.log("TODO: Save Resume");
       }}
     >
-      {({ values, setFieldValue }) => {
-        return (
-          <Form>
-            <Resume setFieldValue={setFieldValue} values={values} isEditing />
-          </Form>
-        );
-      }}
+      {({ values, setFieldValue }) => (
+        <Form>
+          <Resume
+            setFieldValue={setFieldValue}
+            values={values}
+            isEditing={isEditing}
+          />
+        </Form>
+      )}
     </Formik>
   );
 };
