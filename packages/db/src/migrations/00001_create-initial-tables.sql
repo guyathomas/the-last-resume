@@ -35,7 +35,7 @@ CREATE TRIGGER set_timestamp_users BEFORE UPDATE ON app_public.users FOR EACH RO
 
 CREATE TABLE app_public.resumes (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc (),
-    user_auth_id varchar(80),
+    user_auth_id varchar(80) UNIQUE,
     FOREIGN KEY (user_auth_id) REFERENCES app_public.users (auth_id) ON DELETE CASCADE,
   	resume_data json,
     slug text NOT NULL UNIQUE,

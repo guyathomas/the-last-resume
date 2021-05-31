@@ -259,18 +259,6 @@ export declare type App_Public_Resumes_Aggregate_FieldsCountArgs = {
     columns?: Maybe<Array<App_Public_Resumes_Select_Column>>;
     distinct?: Maybe<Scalars['Boolean']>;
 };
-/** order by aggregate values of table "app_public.resumes" */
-export declare type App_Public_Resumes_Aggregate_Order_By = {
-    count?: Maybe<Order_By>;
-    max?: Maybe<App_Public_Resumes_Max_Order_By>;
-    min?: Maybe<App_Public_Resumes_Min_Order_By>;
-};
-/** input type for inserting array relation for remote table "app_public.resumes" */
-export declare type App_Public_Resumes_Arr_Rel_Insert_Input = {
-    data: Array<App_Public_Resumes_Insert_Input>;
-    /** on conflict condition */
-    on_conflict?: Maybe<App_Public_Resumes_On_Conflict>;
-};
 /** Boolean expression to filter rows from the table "app_public.resumes". All fields are combined with a logical 'AND'. */
 export declare type App_Public_Resumes_Bool_Exp = {
     _and?: Maybe<Array<App_Public_Resumes_Bool_Exp>>;
@@ -292,7 +280,9 @@ export declare enum App_Public_Resumes_Constraint {
     /** unique or primary key constraint */
     ResumesSlugKey = "resumes_slug_key",
     /** unique or primary key constraint */
-    SlugIdx = "slug_idx"
+    SlugIdx = "slug_idx",
+    /** unique or primary key constraint */
+    UserAuthIdKey = "user_auth_id_key"
 }
 /** input type for inserting data into table "app_public.resumes" */
 export declare type App_Public_Resumes_Insert_Input = {
@@ -314,14 +304,6 @@ export declare type App_Public_Resumes_Max_Fields = {
     updated_at?: Maybe<Scalars['timestamp']>;
     user_auth_id?: Maybe<Scalars['String']>;
 };
-/** order by max() on columns of table "app_public.resumes" */
-export declare type App_Public_Resumes_Max_Order_By = {
-    created_at?: Maybe<Order_By>;
-    id?: Maybe<Order_By>;
-    slug?: Maybe<Order_By>;
-    updated_at?: Maybe<Order_By>;
-    user_auth_id?: Maybe<Order_By>;
-};
 /** aggregate min on columns */
 export declare type App_Public_Resumes_Min_Fields = {
     __typename?: 'app_public_resumes_min_fields';
@@ -330,14 +312,6 @@ export declare type App_Public_Resumes_Min_Fields = {
     slug?: Maybe<Scalars['String']>;
     updated_at?: Maybe<Scalars['timestamp']>;
     user_auth_id?: Maybe<Scalars['String']>;
-};
-/** order by min() on columns of table "app_public.resumes" */
-export declare type App_Public_Resumes_Min_Order_By = {
-    created_at?: Maybe<Order_By>;
-    id?: Maybe<Order_By>;
-    slug?: Maybe<Order_By>;
-    updated_at?: Maybe<Order_By>;
-    user_auth_id?: Maybe<Order_By>;
 };
 /** response of any mutation on the table "app_public.resumes" */
 export declare type App_Public_Resumes_Mutation_Response = {
@@ -420,27 +394,9 @@ export declare type App_Public_Users = {
     created_at?: Maybe<Scalars['timestamp']>;
     email?: Maybe<Scalars['citext']>;
     id: Scalars['uuid'];
-    /** An array relationship */
-    resumes: Array<App_Public_Resumes>;
-    /** An aggregate relationship */
-    resumes_aggregate: App_Public_Resumes_Aggregate;
+    /** An object relationship */
+    resume?: Maybe<App_Public_Resumes>;
     updated_at?: Maybe<Scalars['timestamp']>;
-};
-/** columns and relationships of "app_public.users" */
-export declare type App_Public_UsersResumesArgs = {
-    distinct_on?: Maybe<Array<App_Public_Resumes_Select_Column>>;
-    limit?: Maybe<Scalars['Int']>;
-    offset?: Maybe<Scalars['Int']>;
-    order_by?: Maybe<Array<App_Public_Resumes_Order_By>>;
-    where?: Maybe<App_Public_Resumes_Bool_Exp>;
-};
-/** columns and relationships of "app_public.users" */
-export declare type App_Public_UsersResumes_AggregateArgs = {
-    distinct_on?: Maybe<Array<App_Public_Resumes_Select_Column>>;
-    limit?: Maybe<Scalars['Int']>;
-    offset?: Maybe<Scalars['Int']>;
-    order_by?: Maybe<Array<App_Public_Resumes_Order_By>>;
-    where?: Maybe<App_Public_Resumes_Bool_Exp>;
 };
 /** aggregated selection of "app_public.users" */
 export declare type App_Public_Users_Aggregate = {
@@ -469,7 +425,7 @@ export declare type App_Public_Users_Bool_Exp = {
     created_at?: Maybe<Timestamp_Comparison_Exp>;
     email?: Maybe<Citext_Comparison_Exp>;
     id?: Maybe<Uuid_Comparison_Exp>;
-    resumes?: Maybe<App_Public_Resumes_Bool_Exp>;
+    resume?: Maybe<App_Public_Resumes_Bool_Exp>;
     updated_at?: Maybe<Timestamp_Comparison_Exp>;
 };
 /** unique or primary key constraints on table "app_public.users" */
@@ -485,7 +441,7 @@ export declare type App_Public_Users_Insert_Input = {
     created_at?: Maybe<Scalars['timestamp']>;
     email?: Maybe<Scalars['citext']>;
     id?: Maybe<Scalars['uuid']>;
-    resumes?: Maybe<App_Public_Resumes_Arr_Rel_Insert_Input>;
+    resume?: Maybe<App_Public_Resumes_Obj_Rel_Insert_Input>;
     updated_at?: Maybe<Scalars['timestamp']>;
 };
 /** aggregate max on columns */
@@ -532,7 +488,7 @@ export declare type App_Public_Users_Order_By = {
     created_at?: Maybe<Order_By>;
     email?: Maybe<Order_By>;
     id?: Maybe<Order_By>;
-    resumes_aggregate?: Maybe<App_Public_Resumes_Aggregate_Order_By>;
+    resume?: Maybe<App_Public_Resumes_Order_By>;
     updated_at?: Maybe<Order_By>;
 };
 /** primary key columns input for table: app_public_users */
@@ -931,9 +887,19 @@ export declare type CreateResumeMutationVariables = Exact<{
 export declare type CreateResumeMutation = ({
     __typename?: 'mutation_root';
 } & {
-    insert_app_public_resumes?: Maybe<({
-        __typename?: 'app_public_resumes_mutation_response';
-    } & Pick<App_Public_Resumes_Mutation_Response, 'affected_rows'>)>;
+    insert_app_public_resumes_one?: Maybe<({
+        __typename?: 'app_public_resumes';
+    } & Pick<App_Public_Resumes, 'id'>)>;
+});
+export declare type GetExistingResumeQueryVariables = Exact<{
+    userAuthId?: Maybe<Scalars['String']>;
+}>;
+export declare type GetExistingResumeQuery = ({
+    __typename?: 'query_root';
+} & {
+    app_public_resumes: Array<({
+        __typename?: 'app_public_resumes';
+    } & Pick<App_Public_Resumes, 'slug'>)>;
 });
 export declare type UpdateResumeByIdMutationVariables = Exact<{
     id: Scalars['uuid'];
@@ -973,6 +939,32 @@ export declare function useCreateResumeMutation(baseOptions?: ApolloReactHooks.M
 export declare type CreateResumeMutationHookResult = ReturnType<typeof useCreateResumeMutation>;
 export declare type CreateResumeMutationResult = ApolloReactCommon.MutationResult<CreateResumeMutation>;
 export declare type CreateResumeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateResumeMutation, CreateResumeMutationVariables>;
+export declare const GetExistingResumeDocument: ApolloReactHooks.DocumentNode;
+/**
+ * __useGetExistingResumeQuery__
+ *
+ * To run a query within a React component, call `useGetExistingResumeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetExistingResumeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetExistingResumeQuery({
+ *   variables: {
+ *      userAuthId: // value for 'userAuthId'
+ *   },
+ * });
+ */
+export declare function useGetExistingResumeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetExistingResumeQuery, GetExistingResumeQueryVariables>): ApolloReactHooks.QueryResult<GetExistingResumeQuery, Exact<{
+    userAuthId?: string;
+}>>;
+export declare function useGetExistingResumeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetExistingResumeQuery, GetExistingResumeQueryVariables>): ApolloReactHooks.QueryTuple<GetExistingResumeQuery, Exact<{
+    userAuthId?: string;
+}>>;
+export declare type GetExistingResumeQueryHookResult = ReturnType<typeof useGetExistingResumeQuery>;
+export declare type GetExistingResumeLazyQueryHookResult = ReturnType<typeof useGetExistingResumeLazyQuery>;
+export declare type GetExistingResumeQueryResult = ApolloReactCommon.QueryResult<GetExistingResumeQuery, GetExistingResumeQueryVariables>;
 export declare const UpdateResumeByIdDocument: ApolloReactHooks.DocumentNode;
 export declare type UpdateResumeByIdMutationFn = ApolloReactCommon.MutationFunction<UpdateResumeByIdMutation, UpdateResumeByIdMutationVariables>;
 /**

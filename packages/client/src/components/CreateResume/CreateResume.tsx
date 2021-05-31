@@ -1,10 +1,15 @@
 import React from "react";
 import { Field, Form, Formik, useFormikContext } from "formik";
-import { useCreateResumeMutation } from "@the-last-resume/graphql/dist";
+import {
+  useCreateResumeMutation,
+  useGetExistingResumeQuery,
+} from "@the-last-resume/graphql";
 import { Box, Button, FormHelperText, Typography } from "@material-ui/core";
 import { createResumeData } from "./helpers";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
+import { useAuth0 } from "@auth0/auth0-react";
+import { ButtonLink } from "components/ButtonLink";
 
 const slugRegex = /^( *)[A-z0-9]+(?:-[A-z0-9]+)*( *)$/;
 const newResumeSchema = Yup.object().shape({
@@ -51,7 +56,28 @@ const ResumeSlugField: React.FC = () => {
 
 export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
   const router = useRouter();
+  const { user } = useAuth0();
   const [createResume, { loading }] = useCreateResumeMutation();
+  const { data, loading: isLoadingExistingResume } = useGetExistingResumeQuery({
+    variables: {
+      userAuthId: user?.["https://hasura.io/jwt/claims"]?.["x-hasura-user-id"],
+    },
+  });
+
+  if (isLoadingExistingResume) return null;
+
+  if (data?.app_public_resumes.length) {
+    const resumeLink = `/resume/${data.app_public_resumes[0].slug}`;
+    return (
+      <>
+        <Typography>{`${process.env.NEXT_PUBLIC_CLIENT_URL}${resumeLink}`}</Typography>
+        <Box marginTop={2} />
+        <Button component={ButtonLink} href={resumeLink} variant="outlined">
+          Edit Resume
+        </Button>
+      </>
+    );
+  }
 
   return (
     <Formik<NewResumeValues>
@@ -96,9 +122,10 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
               </Typography>
               <Field name="slug" as={ResumeSlugField} label="URL Slug" />
             </Box>
-            {!!submitCount && Object.values(errors).map((formError) => (
-              <FormHelperText error>{formError}</FormHelperText>
-            ))}
+            {!!submitCount &&
+              Object.values(errors).map((formError) => (
+                <FormHelperText error>{formError}</FormHelperText>
+              ))}
             <Box mb={2} />
             <Button
               variant="outlined"

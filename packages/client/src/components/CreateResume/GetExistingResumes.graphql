@@ -1,0 +1,5 @@
+query GetExistingResume($userAuthId: String) {
+  app_public_resumes(where: { user_auth_id: { _eq: $userAuthId } }) {
+    slug
+  }
+}

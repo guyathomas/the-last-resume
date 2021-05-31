@@ -40,6 +40,8 @@ export var App_Public_Resumes_Constraint;
     App_Public_Resumes_Constraint["ResumesSlugKey"] = "resumes_slug_key";
     /** unique or primary key constraint */
     App_Public_Resumes_Constraint["SlugIdx"] = "slug_idx";
+    /** unique or primary key constraint */
+    App_Public_Resumes_Constraint["UserAuthIdKey"] = "user_auth_id_key";
 })(App_Public_Resumes_Constraint || (App_Public_Resumes_Constraint = {}));
 /** select columns of table "app_public.resumes" */
 export var App_Public_Resumes_Select_Column;
@@ -127,8 +129,8 @@ export var Order_By;
 })(Order_By || (Order_By = {}));
 export const CreateResumeDocument = gql `
     mutation CreateResume($slug: String!, $resumeData: json!) {
-  insert_app_public_resumes(objects: [{slug: $slug, resume_data: $resumeData}]) {
-    affected_rows
+  insert_app_public_resumes_one(object: {slug: $slug, resume_data: $resumeData}) {
+    id
   }
 }
     `;
@@ -152,6 +154,35 @@ export const CreateResumeDocument = gql `
  */
 export function useCreateResumeMutation(baseOptions) {
     return ApolloReactHooks.useMutation(CreateResumeDocument, baseOptions);
+}
+export const GetExistingResumeDocument = gql `
+    query GetExistingResume($userAuthId: String) {
+  app_public_resumes(where: {user_auth_id: {_eq: $userAuthId}}) {
+    slug
+  }
+}
+    `;
+/**
+ * __useGetExistingResumeQuery__
+ *
+ * To run a query within a React component, call `useGetExistingResumeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetExistingResumeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetExistingResumeQuery({
+ *   variables: {
+ *      userAuthId: // value for 'userAuthId'
+ *   },
+ * });
+ */
+export function useGetExistingResumeQuery(baseOptions) {
+    return ApolloReactHooks.useQuery(GetExistingResumeDocument, baseOptions);
+}
+export function useGetExistingResumeLazyQuery(baseOptions) {
+    return ApolloReactHooks.useLazyQuery(GetExistingResumeDocument, baseOptions);
 }
 export const UpdateResumeByIdDocument = gql `
     mutation UpdateResumeById($id: uuid!, $resumeData: json!) {
