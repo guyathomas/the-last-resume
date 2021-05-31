@@ -20,12 +20,13 @@ BEGIN
 END;
 $$ language plpgsql volatile;
 
-DROP TABLE IF EXISTS app_public.users;
-DROP TABLE IF EXISTS app_public.resumes;
 DROP TABLE IF EXISTS app_public.resume_views;
+DROP TABLE IF EXISTS app_public.resumes;
+DROP TABLE IF EXISTS app_public.users;
 
 CREATE TABLE app_public.users (
-  id varchar(80) NOT NULL UNIQUE, -- Populated by auth0
+  id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc (),
+  auth_id varchar(80) NOT NULL UNIQUE, -- Populated by auth0
   email citext,
   created_at timestamp DEFAULT now(),
   updated_at timestamp DEFAULT now()
@@ -34,8 +35,8 @@ CREATE TRIGGER set_timestamp_users BEFORE UPDATE ON app_public.users FOR EACH RO
 
 CREATE TABLE app_public.resumes (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v1mc (),
-    user_id uuid,
-    FOREIGN KEY (user_id) REFERENCES app_public.users (id) ON DELETE CASCADE,
+    user_auth_id varchar(80),
+    FOREIGN KEY (user_auth_id) REFERENCES app_public.users (id) ON DELETE CASCADE,
   	resume_data json,
     slug text NOT NULL UNIQUE,
     created_at timestamp DEFAULT now(),
