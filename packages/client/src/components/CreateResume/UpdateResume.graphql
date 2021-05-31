@@ -1,0 +1,5 @@
+mutation UpdateResumeById($id: uuid!, $resumeData: json!) {
+  update_app_public_resumes_by_pk(pk_columns: {id: $id}, _set: {resume_data: $resumeData}) {
+    id
+  }
+}

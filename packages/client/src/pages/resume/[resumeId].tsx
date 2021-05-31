@@ -7,7 +7,10 @@ import { Container, Typography } from "@material-ui/core";
 import styled from "@emotion/styled";
 import { keyframes } from "@material-ui/styled-engine";
 import { Form, Formik } from "formik";
-import { App_Public_Resumes } from "@the-last-resume/graphql";
+import {
+  App_Public_Resumes,
+  useUpdateResumeByIdMutation,
+} from "@the-last-resume/graphql";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const fetchGraphqlQuery = (query: string) =>
@@ -96,7 +99,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const { isFallback } = useRouter();
   const { user } = useAuth0();
   const [isEditing, setIsEditing] = React.useState(false);
-
+  const [saveResume] = useUpdateResumeByIdMutation();
   React.useEffect(() => {
     if (user) {
       const isAuthor =
@@ -122,11 +125,17 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
       </CenterContent>
     );
   }
+
   return (
     <Formik
       initialValues={resume.resume_data}
-      onSubmit={() => {
-        console.log("TODO: Save Resume");
+      onSubmit={(resumeData) => {
+        saveResume({
+          variables: {
+            resumeData,
+            id: resume.id!,
+          },
+        });
       }}
     >
       {({ values, setFieldValue }) => (

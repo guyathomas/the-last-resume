@@ -935,6 +935,17 @@ export declare type CreateResumeMutation = ({
         __typename?: 'app_public_resumes_mutation_response';
     } & Pick<App_Public_Resumes_Mutation_Response, 'affected_rows'>)>;
 });
+export declare type UpdateResumeByIdMutationVariables = Exact<{
+    id: Scalars['uuid'];
+    resumeData: Scalars['json'];
+}>;
+export declare type UpdateResumeByIdMutation = ({
+    __typename?: 'mutation_root';
+} & {
+    update_app_public_resumes_by_pk?: Maybe<({
+        __typename?: 'app_public_resumes';
+    } & Pick<App_Public_Resumes, 'id'>)>;
+});
 export declare const CreateResumeDocument: ApolloReactHooks.DocumentNode;
 export declare type CreateResumeMutationFn = ApolloReactCommon.MutationFunction<CreateResumeMutation, CreateResumeMutationVariables>;
 /**
@@ -962,3 +973,30 @@ export declare function useCreateResumeMutation(baseOptions?: ApolloReactHooks.M
 export declare type CreateResumeMutationHookResult = ReturnType<typeof useCreateResumeMutation>;
 export declare type CreateResumeMutationResult = ApolloReactCommon.MutationResult<CreateResumeMutation>;
 export declare type CreateResumeMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateResumeMutation, CreateResumeMutationVariables>;
+export declare const UpdateResumeByIdDocument: ApolloReactHooks.DocumentNode;
+export declare type UpdateResumeByIdMutationFn = ApolloReactCommon.MutationFunction<UpdateResumeByIdMutation, UpdateResumeByIdMutationVariables>;
+/**
+ * __useUpdateResumeByIdMutation__
+ *
+ * To run a mutation, you first call `useUpdateResumeByIdMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateResumeByIdMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateResumeByIdMutation, { data, loading, error }] = useUpdateResumeByIdMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      resumeData: // value for 'resumeData'
+ *   },
+ * });
+ */
+export declare function useUpdateResumeByIdMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<UpdateResumeByIdMutation, UpdateResumeByIdMutationVariables>): ApolloReactHooks.MutationTuple<UpdateResumeByIdMutation, Exact<{
+    id: any;
+    resumeData: any;
+}>>;
+export declare type UpdateResumeByIdMutationHookResult = ReturnType<typeof useUpdateResumeByIdMutation>;
+export declare type UpdateResumeByIdMutationResult = ApolloReactCommon.MutationResult<UpdateResumeByIdMutation>;
+export declare type UpdateResumeByIdMutationOptions = ApolloReactCommon.BaseMutationOptions<UpdateResumeByIdMutation, UpdateResumeByIdMutationVariables>;
