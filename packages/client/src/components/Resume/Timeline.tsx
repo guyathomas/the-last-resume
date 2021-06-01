@@ -15,7 +15,8 @@ interface TimelineProps {
   details?: string;
   className?: string;
   contentEditable?: boolean;
-  disableRemove?: boolean;
+  allowRemove?: boolean;
+  allowAdd?: boolean;
   onRemove?: () => void;
   onAdd?: () => void;
   onChange?: (fieldValue: TimelineFieldNames, value: string) => void;
@@ -115,16 +116,19 @@ const Timeline: React.FC<TimelineProps> = ({
   onRemove,
   onAdd,
   onChange,
-  disableRemove,
+  allowRemove,
+  allowAdd,
 }) => {
   return (
     <TimelineOuter className={className}>
       {contentEditable && (
         <ActionContainer>
-          <AddSection type="button" onClick={onAdd}>
-            <AddIcon />
-          </AddSection>
-          {!disableRemove && (
+          {allowAdd && (
+            <AddSection type="button" onClick={onAdd}>
+              <AddIcon />
+            </AddSection>
+          )}
+          {allowRemove && (
             <RemoveSection
               type="button"
               onClick={onRemove}

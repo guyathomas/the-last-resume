@@ -22,11 +22,15 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 
 ## TODO:
+* Cache pages for longer, but bust on save resume
 * Change JSON structure to have named sections ( to allow for 'projects' )
   * Array of 'sections', with a 'title', and 'content' keys.
+* Tree-shake @material-ui/core + icons
 * Touch avatar to upload image
 * Tap URL to copy resume link
 * Implement view counter
 * Abstract the "Save" button into its own component
+* Separate the resumeId page out so not loading Formik, etc... when we don't need.
 * Make it easier to create more resumes
+* Re-order timeline
 * Script to backup hasura config

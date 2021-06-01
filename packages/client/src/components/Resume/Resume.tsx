@@ -135,17 +135,18 @@ const Resume: React.FC<{
       <ExperienceSection>
         <SectionContentInner>
           <FieldArray name="experience">
-            {({ remove, push }) =>
+            {({ remove, unshift }) =>
               currentValues.experience?.map((item: any, index: any) => {
                 const name = `experience[${index}]`;
                 return (
                   <Timeline
-                    disableRemove={index === 0}
+                    allowRemove={index > 0}
+                    allowAdd={index === 0}
                     onRemove={() => {
                       remove(index);
                     }}
                     onAdd={() => {
-                      push(SampleTimeline);
+                      unshift(SampleTimeline);
                     }}
                     onChange={(fieldValue, value) => {
                       setFieldValue(`${name}.${String(fieldValue)}`, value);
@@ -167,7 +168,7 @@ const Resume: React.FC<{
       <EducationSection>
         <SectionContentInner>
           <FieldArray name="education">
-            {({ remove, push }) =>
+            {({ remove, unshift }) =>
               currentValues.education?.map((item: any, index: any) => {
                 const name = `education[${index}]`;
                 return (
@@ -175,12 +176,13 @@ const Resume: React.FC<{
                     onRemove={() => {
                       remove(index);
                     }}
-                    disableRemove={index === 0}
+                    allowRemove={index > 0}
+                    allowAdd={index === 0}
                     onChange={(fieldValue, value) => {
                       setFieldValue(`${name}.${String(fieldValue)}`, value);
                     }}
                     onAdd={() => {
-                      push(SampleTimeline);
+                      unshift(SampleTimeline);
                     }}
                     contentEditable={isEditing}
                     key={index}
