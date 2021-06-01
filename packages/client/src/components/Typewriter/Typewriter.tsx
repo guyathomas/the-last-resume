@@ -17,16 +17,16 @@ const Cursor = styled(Box)`
   margin-bottom: -0.2em;
 `;
 
-const useTypewriterEffect = (text: string, duration: number) => {
+const useTypewriterEffect = (text: string) => {
+  const CHARACTER_DELAY = 30;
   const parts = React.useRef(text.split("").reverse());
   const [visibleText, setVisibleText] = React.useState("");
-  const characterDelay = React.useRef(duration / parts.current.length);
   const addCharacter = () => {
     if (parts.current.length) {
       setVisibleText((currentText) => currentText + parts.current.pop());
       setTimeout(() => {
         addCharacter();
-      }, characterDelay.current);
+      }, CHARACTER_DELAY);
     }
   };
 
@@ -40,13 +40,14 @@ interface TypewriterProps {
   text: string;
 }
 export const Typewriter: React.FC<TypewriterProps> = ({ text }) => {
-  const [currentText] = useTypewriterEffect(text, 1500);
+  const [currentText] = useTypewriterEffect(text);
   return (
     <Typography
       color="textPrimary"
       variant="h3"
       textAlign="center"
       display="inline-block"
+      aria-label={text}
     >
       <span>
         {currentText}

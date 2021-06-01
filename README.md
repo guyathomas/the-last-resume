@@ -23,7 +23,10 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 ## TODO:
 * Change JSON structure to have named sections ( to allow for 'projects' )
-* Script to backup hasura config
+  * Array of 'sections', with a 'title', and 'content' keys.
+* Touch avatar to upload image
+* Tap URL to copy resume link
 * Implement view counter
 * Abstract the "Save" button into its own component
 * Make it easier to create more resumes
+* Script to backup hasura config
