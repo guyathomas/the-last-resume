@@ -10,10 +10,11 @@ import { useRouter } from "next/router";
 import * as Yup from "yup";
 import { useAuth0 } from "@auth0/auth0-react";
 import { ButtonLink } from "components/ButtonLink";
+import { Typewriter } from "components/Typewriter";
 /*
-  * Allow spaces at start and end
-  * allow -, numbers, letters ( any case )
-*/
+ * Allow spaces at start and end
+ * allow -, numbers, letters ( any case )
+ */
 const slugRegex = /^( *)[A-z0-9]+(?:-[A-z0-9]+)*( *)$/;
 const newResumeSchema = Yup.object().shape({
   slug: Yup.string()
@@ -27,9 +28,6 @@ interface NewResumeValues {
   slug?: string;
 }
 
-interface CreateResumeProps {
-  onSave: (slug: string, resume: any) => Promise<any>;
-}
 const ResumeSlugField: React.FC = () => {
   const { setFieldValue, errors } = useFormikContext<NewResumeValues>();
   const inputRef = React.useRef<HTMLSpanElement>(null);
@@ -57,7 +55,7 @@ const ResumeSlugField: React.FC = () => {
   );
 };
 
-export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
+export const CreateResume: React.FC = () => {
   const router = useRouter();
   const { user } = useAuth0();
   const [createResume, { loading }] = useCreateResumeMutation();
@@ -68,14 +66,12 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
   });
 
   if (isLoadingExistingResume) return null;
-  
+
   if (data?.app_public_resumes.length) {
     const resumeLink = `/resume/${data.app_public_resumes[0].slug}`;
     return (
       <>
-        <Typography color="textPrimary" variant="h3" textAlign="center">
-          Welcome back
-        </Typography>
+        <Typewriter text="Welcome back" />
         <Box marginTop={2} />
         <Typography>{`${process.env.NEXT_PUBLIC_CLIENT_URL}${resumeLink}`}</Typography>
         <Box marginTop={2} />

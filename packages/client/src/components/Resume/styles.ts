@@ -24,7 +24,7 @@ const SectionTitle = styled.div`
   @media ${CONSTANTS.MOBILE} {
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1;
     border-top: 1px solid ${() => COLOR_PALETTE.strokePrimary.color};
     border-bottom: 1px solid ${() => COLOR_PALETTE.strokePrimary.color};
   }
@@ -256,7 +256,7 @@ interface SectionButtonProps {
 export const SectionButton = styled.button<SectionButtonProps>`
   position: absolute;
   outline: none;
-  z-index: 5;
+  z-index: 1;
   cursor: pointer;
   background-color: ${(props) =>
     props.actionType === "negative" ? "#ff4d4f" : "#1890ff"};
