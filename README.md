@@ -22,6 +22,7 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 
 ## TODO:
+* Change JSON structure to have named sections ( to allow for 'projects' )
 * Script to backup hasura config
 * Implement view counter
 * Abstract the "Save" button into its own component

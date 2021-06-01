@@ -151,7 +151,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
         {({ setFieldValue, values }) => (
           <Form>
             {isEditing && (
-              <Box position="fixed" bottom="1rem" right="1rem" zIndex={1}>
+              <Box position="fixed" bottom="1rem" right="1rem" zIndex={10}>
                 <Box position="relative">
                   <Fab
                     aria-label="save"
@@ -174,7 +174,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
                         position: "absolute",
                         top: -6,
                         left: -6,
-                        zIndex: 1,
+                        zIndex: 11,
                       }}
                     />
                   )}
