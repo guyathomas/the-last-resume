@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { AppBar, Button, Typography, Toolbar } from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+import { ButtonLink } from "components/ButtonLink";
 
 export const HEADER_MAX_HEIGHT = 64;
 
@@ -12,7 +14,9 @@ export const Header: FC = () => {
       sx={{ maxHeight: HEADER_MAX_HEIGHT, backgroundColor: "background.paper" }}
     >
       <Toolbar>
-        <Typography>The Last Resume</Typography>
+        <Button component={ButtonLink} href="/" color="inherit" >
+          <HomeIcon />
+        </Button>
         {isAuthenticated ? (
           <Button
             onClick={() => logout({ returnTo: window.location.origin })}
