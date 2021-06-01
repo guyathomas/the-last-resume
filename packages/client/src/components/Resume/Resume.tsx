@@ -140,7 +140,7 @@ const Resume: React.FC<{
                 const name = `experience[${index}]`;
                 return (
                   <Timeline
-                    allowRemove={index > 0}
+                    allowRemove={currentValues.experience.length > 1}
                     allowAdd={index === 0}
                     onRemove={() => {
                       remove(index);
@@ -176,7 +176,7 @@ const Resume: React.FC<{
                     onRemove={() => {
                       remove(index);
                     }}
-                    allowRemove={index > 0}
+                    allowRemove={currentValues.education.length > 1}
                     allowAdd={index === 0}
                     onChange={(fieldValue, value) => {
                       setFieldValue(`${name}.${String(fieldValue)}`, value);
