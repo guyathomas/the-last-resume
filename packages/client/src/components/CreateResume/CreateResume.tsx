@@ -68,11 +68,15 @@ export const CreateResume: React.FC<CreateResumeProps> = ({}) => {
   });
 
   if (isLoadingExistingResume) return null;
-
+  
   if (data?.app_public_resumes.length) {
     const resumeLink = `/resume/${data.app_public_resumes[0].slug}`;
     return (
       <>
+        <Typography color="textPrimary" variant="h3" textAlign="center">
+          Welcome back
+        </Typography>
+        <Box marginTop={2} />
         <Typography>{`${process.env.NEXT_PUBLIC_CLIENT_URL}${resumeLink}`}</Typography>
         <Box marginTop={2} />
         <Button component={ButtonLink} href={resumeLink} variant="outlined">
