@@ -1,6 +1,6 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Resume from "components/Resume";
+import Resume, { ResumeJSON_v2 } from "components/Resume";
 import { useRouter } from "next/dist/client/router";
 import { HEADER_MAX_HEIGHT } from "components/Header";
 import {
@@ -9,9 +9,7 @@ import {
   Container,
   Typography,
 } from "@material-ui/core";
-import styled from "@emotion/styled";
-import { keyframes } from "@material-ui/styled-engine";
-import { Form, Formik } from "formik";
+
 import {
   App_Public_Resumes,
   useUpdateResumeByIdMutation,
@@ -102,6 +100,9 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const [saveResume, { loading: isSaving, data }] =
     useUpdateResumeByIdMutation();
   const [showSuccess, setShowSuccess] = React.useState(false);
+  const [newResume, setNewResume] = React.useState<
+  ResumeJSON_v2
+  >(resume?.resume_data);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -124,7 +125,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
       </CenterContent>
     );
   }
-  if (!resume) {
+  if (!newResume) {
     return (
       <CenterContent>
         <Typography color="textPrimary" variant="h3">
@@ -135,62 +136,55 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   }
 
   return (
-    <>
-      <Formik
-        initialValues={resume.resume_data}
-        onSubmit={async (resumeData) => {
-          await saveResume({
-            variables: {
-              resumeData,
-              id: resume.id!,
-            },
-          });
-          setShowSuccess(true);
-        }}
-      >
-        {({ setFieldValue, values }) => (
-          <Form>
-            {isEditing && (
-              <Box position="fixed" bottom="1rem" right="1rem" zIndex={10}>
-                <Box position="relative">
-                  <Fab
-                    aria-label="save"
-                    color="primary"
-                    type="submit"
-                    disabled={isSaving}
-                    sx={{
-                      backgroundColor: showSuccess ? "green" : undefined,
-                      ":hover": {
-                        backgroundColor: showSuccess ? "green" : undefined,
-                      },
-                    }}
-                  >
-                    {showSuccess ? <CheckIcon /> : <SaveIcon />}
-                  </Fab>
-                  {isSaving && (
-                    <CircularProgress
-                      size={68}
-                      sx={{
-                        position: "absolute",
-                        top: -6,
-                        left: -6,
-                        zIndex: 11,
-                      }}
-                    />
-                  )}
-                </Box>
-              </Box>
+    <form
+      onSubmit={async () => {
+        if (!resume?.id) return;
+        await saveResume({
+          variables: {
+            resumeData: newResume,
+            id: resume.id,
+          },
+        });
+        setShowSuccess(true);
+      }}
+    >
+      {isEditing && (
+        <Box position="fixed" bottom="1rem" right="1rem" zIndex={10}>
+          <Box position="relative">
+            <Fab
+              aria-label="save"
+              color="primary"
+              type="submit"
+              disabled={isSaving}
+              sx={{
+                backgroundColor: showSuccess ? "green" : undefined,
+                ":hover": {
+                  backgroundColor: showSuccess ? "green" : undefined,
+                },
+              }}
+            >
+              {showSuccess ? <CheckIcon /> : <SaveIcon />}
+            </Fab>
+            {isSaving && (
+              <CircularProgress
+                size={68}
+                sx={{
+                  position: "absolute",
+                  top: -6,
+                  left: -6,
+                  zIndex: 11,
+                }}
+              />
             )}
-            <Resume
-              currentValues={values}
-              setFieldValue={setFieldValue}
-              values={resume.resume_data}
-              isEditing={isEditing}
-            />
-          </Form>
-        )}
-      </Formik>
-    </>
+          </Box>
+        </Box>
+      )}
+      <Resume
+        currentValues={newResume}
+        isEditing={isEditing}
+        setResume={setNewResume}
+      />
+    </form>
   );
 };
 

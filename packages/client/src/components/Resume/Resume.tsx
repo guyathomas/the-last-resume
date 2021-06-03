@@ -1,12 +1,10 @@
 import React from "react";
-import styled from "@emotion/styled";
 import Timeline from "./Timeline";
 import {
   PageContainer,
   ProfileContainer,
   ProfileSection,
-  EducationTitle,
-  ExperienceTitle,
+  TimelineSectionTitle,
   IntroTitle,
   Titles,
   Contacts,
@@ -14,26 +12,28 @@ import {
   ContactTitle,
   FirstName,
   LastName,
-  EducationSection,
   BioWrapper,
   IntroContent,
-  ExperienceSection,
+  TimelineSectionValues,
   SectionContentInner,
   Bio,
   Description,
   DescriptionRow,
   Names,
-  SectionButton,
   AvatarImage,
   ContactDetail,
 } from "./styles";
+import set from "lodash/set";
+import { TextField } from "@material-ui/core";
 
-import { FieldArray, Field, FormikHelpers } from "formik";
-import AddIcon from "@material-ui/icons/Add";
-const DEFAULT_AVATAR_URL =
-  "https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png";
+interface SectionValue {
+  date: string;
+  company: string;
+  title: string;
+  details: string;
+}
 
-const SampleTimeline = {
+const SampleTimeline: SectionValue = {
   title: "Title",
   company: "Company",
   date: "Date",
@@ -41,18 +41,42 @@ const SampleTimeline = {
     "List of details<ul><li>First</li><li>Second</li><li>Third</li></ul>",
 };
 
-const noop = () => {};
+interface ResumeJSON_v2_Section {
+  label: String;
+  values: SectionValue[];
+}
 
-type ResumeJSON = any;
+export interface ResumeJSON_v2 {
+  id: string;
+  version: '2';
+  tagline: string;
+  intro: string;
+  contactDetails: [title: string, description: string][];
+  sections: ResumeJSON_v2_Section[];
+  avatar: string;
+  firstName: string;
+  lastName: string;
+}
 
-const Resume: React.FC<{
-  values: ResumeJSON;
-  currentValues: ResumeJSON;
+interface ResumeProps {
+  currentValues: ResumeJSON_v2;
   isEditing?: boolean;
-  setFieldValue?: FormikHelpers<ResumeJSON>["setFieldValue"];
-}> = ({ values, isEditing, setFieldValue = noop, currentValues }) => {
+  setResume: React.Dispatch<React.SetStateAction<ResumeJSON_v2>>;
+}
+
+const Resume: React.FC<ResumeProps> = ({
+  isEditing,
+  setResume,
+  currentValues,
+}) => {
+  // We don't want the contentEditable fields to render using actual form state
+  // Since we're taking control of the dom, it led to unexpected behavior
+  const [initialValues] = React.useState(currentValues);
+  const setFieldValue = (field: string, value: string) => {
+    set(currentValues, field, value);
+  };
   const createOnInput =
-    (name: keyof ResumeJSON) => (event: React.FormEvent<HTMLElement>) => {
+    (name: string) => (event: React.FormEvent<HTMLElement>) => {
       setFieldValue(String(name), event.currentTarget.innerText);
     };
 
@@ -61,12 +85,16 @@ const Resume: React.FC<{
       <ProfileSection>
         <ProfileContainer>
           {isEditing && (
-            <Field style={{ width: "100%" }} id="avatar" name="avatar" />
+            <TextField
+              sx={{ width: "100%" }}
+              variant="outlined"
+              id="avatar"
+              onChange={(event) => {
+                setFieldValue("avatar", event.target.value);
+              }}
+            />
           )}
-          <AvatarImage
-            src={values.avatar || DEFAULT_AVATAR_URL}
-            alt="profile-picture"
-          />
+          <AvatarImage src={initialValues.avatar} alt="profile-picture" />
         </ProfileContainer>
       </ProfileSection>
       <BioWrapper>
@@ -77,13 +105,13 @@ const Resume: React.FC<{
                 contentEditable={isEditing}
                 onInput={createOnInput("firstName")}
               >
-                {values.firstName}
+                {initialValues.firstName}
               </FirstName>
               <LastName
                 contentEditable={isEditing}
                 onInput={createOnInput("lastName")}
               >
-                {values.lastName}
+                {initialValues.lastName}
               </LastName>
             </Names>
             <DescriptionRow>
@@ -91,20 +119,17 @@ const Resume: React.FC<{
                 contentEditable={isEditing}
                 onInput={createOnInput("tagline")}
               >
-                {values.tagline}
+                {initialValues.tagline}
               </Description>
             </DescriptionRow>
           </Titles>
           <Contacts>
-            {values.contactDetails?.map((contactDetail: any, index: any) => {
-              // Wow, TS really wants me to be safe here
-              const definitelyContactDetail = contactDetail || [];
-              const stringTitle = String(definitelyContactDetail[0]);
-              const stringDetail = String(definitelyContactDetail[1]);
-              if (!stringDetail) return null;
+            {currentValues.contactDetails?.map((_, index) => {
+              const [title, detail] = initialValues.contactDetails[index] || [];
+              if (!detail) return null;
               return (
-                <ContactWrapper key={stringTitle}>
-                  <ContactTitle>{stringTitle}</ContactTitle>
+                <ContactWrapper key={title}>
+                  <ContactTitle>{title}</ContactTitle>
                   <ContactDetail
                     contentEditable={isEditing}
                     onInput={(event) => {
@@ -114,7 +139,7 @@ const Resume: React.FC<{
                       );
                     }}
                   >
-                    {stringDetail}
+                    {detail}
                   </ContactDetail>
                 </ContactWrapper>
               );
@@ -128,75 +153,81 @@ const Resume: React.FC<{
           contentEditable={isEditing}
           onInput={createOnInput("intro")}
         >
-          {values.intro}
+          {initialValues.intro}
         </SectionContentInner>
       </IntroContent>
-      <ExperienceTitle>Experience</ExperienceTitle>
-      <ExperienceSection>
-        <SectionContentInner>
-          <FieldArray name="experience">
-            {({ remove, unshift }) =>
-              currentValues.experience?.map((item: any, index: any) => {
-                const name = `experience[${index}]`;
+      {currentValues.sections.map(({ label, values }, sectionIndex) => (
+        <>
+          <TimelineSectionTitle>{label}</TimelineSectionTitle>
+          <TimelineSectionValues>
+            <SectionContentInner>
+              {values.map((_, sectionValueIndex) => {
+                const sectionValueName = `sections[${sectionIndex}].values[${sectionValueIndex}]`;
+                const { company, date, details, title } =
+                  currentValues.sections[sectionIndex].values[
+                    sectionValueIndex
+                  ];
                 return (
                   <Timeline
-                    allowRemove={currentValues.experience.length > 1}
-                    allowAdd={index === 0}
+                    allowRemove={
+                      currentValues.sections[sectionIndex].values.length > 1
+                    }
+                    allowAdd={sectionValueIndex === 0}
                     onRemove={() => {
-                      remove(index);
+                      const newState = {
+                        ...currentValues,
+                        sections: currentValues.sections.map((s, i) => {
+                          if (i === sectionIndex) {
+                            const newValues = [...s.values];
+                            newValues.splice(sectionIndex, 1);
+                            return {
+                              label: s.label,
+                              values: newValues,
+                            };
+                          } else {
+                            return s;
+                          }
+                        }),
+                      };
+                      setResume(newState);
                     }}
                     onAdd={() => {
-                      unshift(SampleTimeline);
+                      const newState = {
+                        ...currentValues,
+                        sections: currentValues.sections.map((s, i) => {
+                          if (i === sectionIndex) {
+                            const newValues = [...s.values];
+                            newValues.unshift(SampleTimeline);
+                            return {
+                              label: s.label,
+                              values: newValues,
+                            };
+                          } else {
+                            return s;
+                          }
+                        }),
+                      };
+                      setResume(newState);
                     }}
                     onChange={(fieldValue, value) => {
-                      setFieldValue(`${name}.${String(fieldValue)}`, value);
+                      const fieldName = `${sectionValueName}.${String(
+                        fieldValue
+                      )}`;
+                      setFieldValue(fieldName, value);
                     }}
                     contentEditable={isEditing}
-                    company={item?.company || ""}
-                    title={item?.title || ""}
-                    date={item?.date || ""}
-                    details={item?.details || ""}
-                    key={index}
+                    company={company || ""}
+                    title={title || ""}
+                    date={date || ""}
+                    details={details || ""}
+                    key={sectionValueName}
                   />
                 );
-              })
-            }
-          </FieldArray>
-        </SectionContentInner>
-      </ExperienceSection>
-      <EducationTitle>Education</EducationTitle>
-      <EducationSection>
-        <SectionContentInner>
-          <FieldArray name="education">
-            {({ remove, unshift }) =>
-              currentValues.education?.map((item: any, index: any) => {
-                const name = `education[${index}]`;
-                return (
-                  <Timeline
-                    onRemove={() => {
-                      remove(index);
-                    }}
-                    allowRemove={currentValues.education.length > 1}
-                    allowAdd={index === 0}
-                    onChange={(fieldValue, value) => {
-                      setFieldValue(`${name}.${String(fieldValue)}`, value);
-                    }}
-                    onAdd={() => {
-                      unshift(SampleTimeline);
-                    }}
-                    contentEditable={isEditing}
-                    key={index}
-                    company={item?.company || ""}
-                    title={item?.title || ""}
-                    date={item?.date || ""}
-                    details={item?.details || ""}
-                  />
-                );
-              })
-            }
-          </FieldArray>
-        </SectionContentInner>
-      </EducationSection>
+              })}
+            </SectionContentInner>
+          </TimelineSectionValues>
+        </>
+      ))}
     </PageContainer>
   );
 };

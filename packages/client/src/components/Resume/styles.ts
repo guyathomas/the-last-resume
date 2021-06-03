@@ -104,7 +104,7 @@ export const EducationTitle = styled(SectionTitle)`
     grid-area: education-title;
   }
 `;
-export const ExperienceTitle = styled(SectionTitle)`
+export const TimelineSectionTitle = styled(SectionTitle)`
   @media only print {
     grid-area: experience-title;
   }
@@ -194,7 +194,7 @@ export const IntroContent = styled(SectionContent)`
     padding-top: 1rem;
   }
 `;
-export const ExperienceSection = styled(SectionContent)`
+export const TimelineSectionValues = styled(SectionContent)`
   @media only print {
     grid-area: experience-content;
   }
@@ -286,7 +286,8 @@ export const Background = styled.div`
 `;
 
 export const ContactDetail = styled.span`
-  a, a:active {
+  a,
+  a:active {
     color: ${() => COLOR_PALETTE.primary.color};
   }
-`
+`;

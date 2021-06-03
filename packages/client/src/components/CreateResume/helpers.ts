@@ -1,6 +1,8 @@
-export const createResumeData = (slug: string) =>({
+import { ResumeJSON_v2 } from "components/Resume";
+
+export const createResumeData = (slug: string): ResumeJSON_v2 => ({
   id: "b7d91036-4df9-5d06-82a5-0d46589ea95d",
-  version: 1,
+  version: "2",
   tagline: "A good place for a catchy tagline",
   intro:
     "A sentence or two about you. What you love about your work. This is to get the recruiter excited",
@@ -9,19 +11,28 @@ export const createResumeData = (slug: string) =>({
     ["Location", "San Francisco"],
     ["Web", `thelastresume.com/resume/${slug}`],
   ],
-  experience: [
+  sections: [
     {
-      date: "Date Range",
-      company: "Company Name",
-      title: "Job Title",
-      details: "What did you do here?",
+      label: "Experience",
+      values: [
+        {
+          date: "Date Range",
+          company: "Company Name",
+          title: "Job Title",
+          details: "What did you do here?",
+        },
+      ],
     },
-  ],
-  education: [
     {
-      company: "School Name",
-      title: "Degree Name",
-      details: "Describe major accomplishments in the degree",
+      label: "Education",
+      values: [
+        {
+          company: "School Name",
+          title: "Degree Name",
+          details: "Describe major accomplishments in the degree",
+          date: "Date Range"
+        },
+      ],
     },
   ],
   avatar:
