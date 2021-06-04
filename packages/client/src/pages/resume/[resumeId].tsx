@@ -7,7 +7,10 @@ import {
   Container,
   Typography,
   Fab,
+  Tooltip,
 } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import EditIcon from "@material-ui/icons/Edit";
 import {
   App_Public_Resumes,
   useUpdateResumeByIdMutation,
@@ -101,13 +104,11 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
     resume?.resume_data
   );
   const userId = hasuraSecrets["x-hasura-user-id"];
+  const isAuthor = userId === resume?.user?.auth_id;
 
   React.useEffect(() => {
-    if (userId) {
-      const isAuthor = userId === resume?.user?.auth_id;
-      setIsEditing(isAuthor);
-    }
-  }, [userId]);
+    if (isAuthor) setIsEditing(isAuthor)
+  }, [isAuthor]);
 
   if (isFallback) {
     return (
@@ -139,11 +140,30 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
         });
       }}
     >
-      {isEditing && (
-        <SaveFab
-          requestState={isSaving ? "loading" : data ? "success" : undefined}
-        />
-      )}
+      <Box position="fixed" bottom="1rem" right="1rem" zIndex={10}>
+        {isAuthor && (
+          <Tooltip title={isEditing ? "Preview" : "Edit"}>
+            <Fab
+              aria-label="edit"
+              color="primary"
+              type="button"
+              sx={{
+                marginBottom: 1,
+              }}
+              onClick={() => {
+                setIsEditing((isCurrentlyEditing) => !isCurrentlyEditing);
+              }}
+            >
+              {isEditing ? <VisibilityIcon /> : <EditIcon />}
+            </Fab>
+          </Tooltip>
+        )}
+        {isAuthor && (
+          <SaveFab
+            requestState={isSaving ? "loading" : data ? "success" : undefined}
+          />
+        )}
+      </Box>
       <Resume
         currentValues={newResume}
         isEditing={isEditing}

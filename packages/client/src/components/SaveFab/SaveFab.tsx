@@ -1,26 +1,28 @@
 import React from "react";
 import SaveIcon from "@material-ui/icons/Save";
 import CheckIcon from "@material-ui/icons/Check";
-import { Fab, Box, CircularProgress } from "@material-ui/core";
+import { Fab, Box, CircularProgress, Tooltip } from "@material-ui/core";
 
-export const SaveFab: React.FC<{ requestState?: 'loading' | 'success' }> = ({ requestState }) => {
+export const SaveFab: React.FC<{ requestState?: "loading" | "success" }> = ({
+  requestState,
+}) => {
   const [showSuccess, setShowSuccess] = React.useState(false);
   React.useEffect(() => {
-    if (requestState === 'success') {
-    setShowSuccess(true);
+    if (requestState === "success") {
+      setShowSuccess(true);
       setTimeout(() => {
         setShowSuccess(false);
       }, 1000);
     }
   }, [requestState]);
   return (
-    <Box position="fixed" bottom="1rem" right="1rem" zIndex={10}>
+    <Tooltip title="Save">
       <Box position="relative">
         <Fab
           aria-label="save"
           color="primary"
           type="submit"
-          disabled={requestState === 'loading'}
+          disabled={requestState === "loading"}
           sx={{
             backgroundColor: showSuccess ? "green" : undefined,
             ":hover": {
@@ -30,7 +32,7 @@ export const SaveFab: React.FC<{ requestState?: 'loading' | 'success' }> = ({ re
         >
           {showSuccess ? <CheckIcon /> : <SaveIcon />}
         </Fab>
-        {requestState === 'loading' && (
+        {requestState === "loading" && (
           <CircularProgress
             size={68}
             sx={{
@@ -42,6 +44,6 @@ export const SaveFab: React.FC<{ requestState?: 'loading' | 'success' }> = ({ re
           />
         )}
       </Box>
-    </Box>
+    </Tooltip>
   );
 };
