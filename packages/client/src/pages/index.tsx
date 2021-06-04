@@ -14,8 +14,8 @@ const HomePage: FC = () => {
     <>
       <Typewriter text="The last resume you'll ever need" />
       <Box mt={3} />
-      <Button variant="outlined" color="primary" onClick={loginWithRedirect}>
-        Create Account
+      <Button variant="contained" color="primary" onClick={loginWithRedirect}>
+        Get Started
       </Button>
     </>
   );

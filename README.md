@@ -26,7 +26,6 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 * Rename sections
 * Cache pages for longer, but bust on save resume
 * Touch avatar to upload image
-* Tap URL to copy resume link
 * Make it easier to create more resumes
 * Re-order timeline
 * Script to backup hasura config
