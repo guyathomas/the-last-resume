@@ -22,6 +22,8 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 
 ## TODO:
+* Re-order SectionValues
+* Rename sections
 * Cache pages for longer, but bust on save resume
 * Touch avatar to upload image
 * Tap URL to copy resume link
