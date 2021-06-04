@@ -48,7 +48,7 @@ interface ResumeJSON_v2_Section {
 
 export interface ResumeJSON_v2 {
   id: string;
-  version: '2';
+  version: "2";
   tagline: string;
   intro: string;
   contactDetails: [title: string, description: string][];
@@ -79,22 +79,25 @@ const Resume: React.FC<ResumeProps> = ({
     (name: string) => (event: React.FormEvent<HTMLElement>) => {
       setFieldValue(String(name), event.currentTarget.innerText);
     };
-
   return (
     <PageContainer>
       <ProfileSection>
         <ProfileContainer>
           {isEditing && (
             <TextField
+              value={currentValues.avatar}
               sx={{ width: "100%" }}
               variant="outlined"
               id="avatar"
               onChange={(event) => {
-                setFieldValue("avatar", event.target.value);
+                setResume({
+                  ...currentValues,
+                  avatar: event.target.value,
+                });
               }}
             />
           )}
-          <AvatarImage src={initialValues.avatar} alt="profile-picture" />
+          <AvatarImage src={currentValues.avatar} alt="profile-picture" />
         </ProfileContainer>
       </ProfileSection>
       <BioWrapper>

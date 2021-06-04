@@ -135,7 +135,8 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
 
   return (
     <form
-      onSubmit={async () => {
+      onSubmit={async (event) => {
+        event.preventDefault()
         if (!resume?.id) return;
         await saveResume({
           variables: {
