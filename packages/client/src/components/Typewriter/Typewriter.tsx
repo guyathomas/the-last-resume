@@ -4,8 +4,8 @@ import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
 const blinking = keyframes`
-from, to { background-color: transparent }
-50% { background-color: orange; }
+  from, to { background-color: transparent }
+  50% { background-color: orange; }
 `;
 const Cursor = styled(Box)`
   background-color: orange;
@@ -17,7 +17,7 @@ const Cursor = styled(Box)`
   margin-bottom: -0.2em;
 `;
 
-const useTypewriterEffect = (text: string) => {
+const useTypewriterEffect = (text: string): [string] => {
   const CHARACTER_DELAY = 30;
   const parts = React.useRef(text.split("").reverse());
   const [visibleText, setVisibleText] = React.useState("");
@@ -39,6 +39,7 @@ const useTypewriterEffect = (text: string) => {
 interface TypewriterProps {
   text: string;
 }
+
 export const Typewriter: React.FC<TypewriterProps> = ({ text }) => {
   const [currentText] = useTypewriterEffect(text);
   return (

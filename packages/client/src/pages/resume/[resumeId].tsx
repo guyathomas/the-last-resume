@@ -14,7 +14,7 @@ import {
   App_Public_Resumes,
   useUpdateResumeByIdMutation,
 } from "@the-last-resume/graphql";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "hooks/useAuth";
 
 import { Fab } from "@material-ui/core";
 
@@ -95,28 +95,26 @@ const CenterContent: React.FC = ({ children }) => (
 
 const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const { isFallback } = useRouter();
-  const { user } = useAuth0();
+  const { hasuraSecrets } = useAuth();
   const [isEditing, setIsEditing] = React.useState(false);
   const [saveResume, { loading: isSaving, data }] =
     useUpdateResumeByIdMutation();
   const [showSuccess, setShowSuccess] = React.useState(false);
-  const [newResume, setNewResume] = React.useState<
-  ResumeJSON_v2
-  >(resume?.resume_data);
-
+  const [newResume, setNewResume] = React.useState<ResumeJSON_v2>(
+    resume?.resume_data
+  );
+  const userId = hasuraSecrets["x-hasura-user-id"];
   React.useEffect(() => {
     setTimeout(() => {
       setShowSuccess(false);
     }, 3000);
   }, [data]);
   React.useEffect(() => {
-    if (user) {
-      const isAuthor =
-        user["https://hasura.io/jwt/claims"]["x-hasura-user-id"] ===
-        resume?.user?.auth_id;
+    if (userId) {
+      const isAuthor = userId === resume?.user?.auth_id;
       setIsEditing(isAuthor);
     }
-  }, [user]);
+  }, [userId]);
 
   if (isFallback) {
     return (

@@ -1,45 +1,57 @@
-import LayoutForPath, { LayoutSpec } from '@guyathomas/layout-for-path'
+import { Container } from "@material-ui/core";
+import LayoutForPath, { LayoutSpec } from "@guyathomas/layout-for-path";
 
-import { AuthGuard } from 'components/AuthGuard'
-import { Header } from 'components/Header'
+import Header, { HEADER_MAX_HEIGHT } from "components/Header";
 import { useRouter } from "next/router";
 
-const NoLayout: React.FC = ({ children }) => <>{children}</>
+const NoLayout: React.FC = ({ children }) => <>{children}</>;
 
 const MainLayout: React.FC = ({ children }) => (
   <>
     <Header />
     {children}
   </>
-)
+);
 
-const ProtectedMainLayout: React.FC = ({ children }) => (
-  <AuthGuard>
-    <MainLayout>
+const HomeLayout: React.FC = ({ children }) => (
+  <MainLayout>
+    <Container
+      sx={{
+        minHeight: `calc(100vh - ${HEADER_MAX_HEIGHT}px)`,
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: "background.paper",
+      }}
+    >
       {children}
-    </MainLayout>
-  </AuthGuard>
-)
-
+    </Container>
+  </MainLayout>
+);
 
 const layoutSpec: LayoutSpec[] = [
   {
-    pattern: "/resume/edit",
-    layout: ProtectedMainLayout,
-  },
-  {
     pattern: "/resume/:resumeId",
     layout: NoLayout,
+  },
+  {
+    pattern: "/",
+    layout: HomeLayout,
   },
   {
     pattern: "/*",
     layout: MainLayout,
   },
 ];
-export const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+
+export const AppLayout: React.FC = ({
+  children,
+}) => {
   const router = useRouter();
+  const [pathWithoutQuery] = router.asPath.split("?");
   return (
-    <LayoutForPath path={router.asPath} layoutSpec={layoutSpec}>
+    <LayoutForPath path={pathWithoutQuery} layoutSpec={layoutSpec}>
       {children}
     </LayoutForPath>
   );

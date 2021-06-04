@@ -14,7 +14,7 @@ import {
   LastName,
   BioWrapper,
   IntroContent,
-  TimelineSectionValues,
+  TimelineSectionDetails,
   SectionContentInner,
   Bio,
   Description,
@@ -26,14 +26,14 @@ import {
 import set from "lodash/set";
 import { TextField } from "@material-ui/core";
 
-interface SectionValue {
+interface SectionDetail {
   date: string;
   company: string;
   title: string;
   details: string;
 }
 
-const SampleTimeline: SectionValue = {
+const SampleTimeline: SectionDetail = {
   title: "Title",
   company: "Company",
   date: "Date",
@@ -43,7 +43,7 @@ const SampleTimeline: SectionValue = {
 
 interface ResumeJSON_v2_Section {
   label: String;
-  values: SectionValue[];
+  values: SectionDetail[];
 }
 
 export interface ResumeJSON_v2 {
@@ -159,7 +159,7 @@ const Resume: React.FC<ResumeProps> = ({
       {currentValues.sections.map(({ label, values }, sectionIndex) => (
         <>
           <TimelineSectionTitle>{label}</TimelineSectionTitle>
-          <TimelineSectionValues>
+          <TimelineSectionDetails>
             <SectionContentInner>
               {values.map((_, sectionValueIndex) => {
                 const sectionValueName = `sections[${sectionIndex}].values[${sectionValueIndex}]`;
@@ -225,7 +225,7 @@ const Resume: React.FC<ResumeProps> = ({
                 );
               })}
             </SectionContentInner>
-          </TimelineSectionValues>
+          </TimelineSectionDetails>
         </>
       ))}
     </PageContainer>

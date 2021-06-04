@@ -1,13 +1,13 @@
 import { FC } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
-import { AppBar, Button, Typography, Toolbar } from "@material-ui/core";
+import { useAuth } from "hooks/useAuth";
+import { AppBar, Button, Toolbar } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
-import { ButtonLink } from "components/ButtonLink";
+import ButtonLink from "components/ButtonLink";
 
 export const HEADER_MAX_HEIGHT = 64;
 
 export const Header: FC = () => {
-  const { isAuthenticated, logout, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, logout, loginWithRedirect } = useAuth();
   return (
     <AppBar
       position="static"

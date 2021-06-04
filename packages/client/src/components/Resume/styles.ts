@@ -194,7 +194,7 @@ export const IntroContent = styled(SectionContent)`
     padding-top: 1rem;
   }
 `;
-export const TimelineSectionValues = styled(SectionContent)`
+export const TimelineSectionDetails = styled(SectionContent)`
   @media only print {
     grid-area: experience-content;
   }
