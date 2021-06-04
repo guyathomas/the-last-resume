@@ -35,10 +35,18 @@ const fetchGraphqlQuery = (query: string) =>
   }).then((res) => res.json());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const resumes: App_Public_Resumes[] = await fetchGraphqlQuery(`{
-    app_public_resumes {
-      slug
-    }
+  const daysAgo = 30;
+  const date = new Date();
+  date.setDate(date.getDate() - daysAgo);
+
+  const resumes: App_Public_Resumes[] =
+    await fetchGraphqlQuery(`query PopularRecentResumes {
+    app_public_resumes(
+      order_by: {resume_views_aggregate: {count: desc}},
+      limit: 100,
+      where: {resume_views: {created_at: {_gt: "${date.toISOString()}"}}}) {
+        slug
+      }
   }`).then((json) => json?.data?.app_public_resumes || []);
 
   return {
