@@ -7,6 +7,7 @@ import {
   Container,
   Typography,
   Fab,
+  Button,
   Tooltip,
 } from "@material-ui/core";
 import VisibilityIcon from "@material-ui/icons/Visibility";
@@ -147,6 +148,15 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
         <Typography color="textPrimary" variant="h3">
           No resume found 😢
         </Typography>
+        <Button
+          sx={{ marginTop: 1 }}
+          variant="outlined"
+          onClick={() => {
+            window.location.reload();
+          }}
+        >
+          Try again?
+        </Button>
       </CenterContent>
     );
   }
