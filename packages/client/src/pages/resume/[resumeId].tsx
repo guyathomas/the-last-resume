@@ -93,21 +93,37 @@ const CenterContent: React.FC = ({ children }) => (
   </Container>
 );
 
+const useAddResumeView = (resumeId?: string) => {
+  const hasTriggeredView = React.useRef(false);
+  const isServer = typeof window === "undefined";
+  const isProd = process.env.NODE_ENV === "production";
+  if (!hasTriggeredView.current && isServer && isProd && resumeId) {
+    fetchGraphqlQuery(`
+    mutation InsertResumeView {
+      insert_app_public_resume_views_one(object: {resume_id: "${resumeId}"}) {
+        id
+      }
+    }
+    `).then(console.log)
+    hasTriggeredView.current = true;
+  }
+};
+
 const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const { isFallback } = useRouter();
   const { hasuraSecrets } = useAuth();
   const [isEditing, setIsEditing] = React.useState(false);
   const [saveResume, { loading: isSaving, data }] =
     useUpdateResumeByIdMutation();
-
   const [newResume, setNewResume] = React.useState<ResumeJSON_v2>(
     resume?.resume_data
   );
   const userId = hasuraSecrets["x-hasura-user-id"];
   const isAuthor = userId === resume?.user?.auth_id;
+  useAddResumeView(resume?.id);
 
   React.useEffect(() => {
-    if (isAuthor) setIsEditing(isAuthor)
+    if (isAuthor) setIsEditing(isAuthor);
   }, [isAuthor]);
 
   if (isFallback) {

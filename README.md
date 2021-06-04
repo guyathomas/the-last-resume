@@ -22,7 +22,6 @@ The `pages/api` directory is mapped to `/api/*`. Files in this directory are tre
 
 
 ## TODO:
-* Implement view counter
 * Cache pages for longer, but bust on save resume
 * Touch avatar to upload image
 * Tap URL to copy resume link
