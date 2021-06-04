@@ -1,25 +1,22 @@
 import React from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Resume, { ResumeJSON_v2 } from "components/Resume";
-import { useRouter } from "next/dist/client/router";
-import { HEADER_MAX_HEIGHT } from "components/Header";
+import { useRouter } from "next/router";
 import {
   Box,
   CircularProgress,
   Container,
   Typography,
+  Fab,
 } from "@material-ui/core";
-
 import {
   App_Public_Resumes,
   useUpdateResumeByIdMutation,
 } from "@the-last-resume/graphql";
+import Resume, { ResumeJSON_v2 } from "components/Resume";
+
+import { HEADER_MAX_HEIGHT } from "components/Header";
+import SaveFab from "components/SaveFab";
 import { useAuth } from "hooks/useAuth";
-
-import { Fab } from "@material-ui/core";
-
-import SaveIcon from "@material-ui/icons/Save";
-import CheckIcon from "@material-ui/icons/Check";
 
 const fetchGraphqlQuery = (query: string) =>
   fetch(process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT!, {
@@ -99,16 +96,12 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   const [isEditing, setIsEditing] = React.useState(false);
   const [saveResume, { loading: isSaving, data }] =
     useUpdateResumeByIdMutation();
-  const [showSuccess, setShowSuccess] = React.useState(false);
+
   const [newResume, setNewResume] = React.useState<ResumeJSON_v2>(
     resume?.resume_data
   );
   const userId = hasuraSecrets["x-hasura-user-id"];
-  React.useEffect(() => {
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 3000);
-  }, [data]);
+
   React.useEffect(() => {
     if (userId) {
       const isAuthor = userId === resume?.user?.auth_id;
@@ -136,7 +129,7 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
   return (
     <form
       onSubmit={async (event) => {
-        event.preventDefault()
+        event.preventDefault();
         if (!resume?.id) return;
         await saveResume({
           variables: {
@@ -144,39 +137,12 @@ const ResumePage: React.FC<ResumePageProps> = ({ resume }) => {
             id: resume.id,
           },
         });
-        setShowSuccess(true);
       }}
     >
       {isEditing && (
-        <Box position="fixed" bottom="1rem" right="1rem" zIndex={10}>
-          <Box position="relative">
-            <Fab
-              aria-label="save"
-              color="primary"
-              type="submit"
-              disabled={isSaving}
-              sx={{
-                backgroundColor: showSuccess ? "green" : undefined,
-                ":hover": {
-                  backgroundColor: showSuccess ? "green" : undefined,
-                },
-              }}
-            >
-              {showSuccess ? <CheckIcon /> : <SaveIcon />}
-            </Fab>
-            {isSaving && (
-              <CircularProgress
-                size={68}
-                sx={{
-                  position: "absolute",
-                  top: -6,
-                  left: -6,
-                  zIndex: 11,
-                }}
-              />
-            )}
-          </Box>
-        </Box>
+        <SaveFab
+          requestState={isSaving ? "loading" : data ? "success" : undefined}
+        />
       )}
       <Resume
         currentValues={newResume}
