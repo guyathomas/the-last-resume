@@ -65,9 +65,9 @@ export const PageContainer = styled.div`
 `;
 
 export const ProfileContainer = styled.div`
-  width: 200px;
-  height: 200px;
   margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
   @media ${CONSTANTS.DESKTOP} {
     width: 300px;
     height: 300px;
@@ -155,8 +155,8 @@ export const ContactTitle = styled.h4`
 `;
 
 export const AvatarImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
+  width: 200px;
+  height: 200px;
 `;
 
 export const FirstName = styled.h1`
