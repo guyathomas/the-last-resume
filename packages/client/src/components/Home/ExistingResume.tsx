@@ -35,9 +35,6 @@ export const ExistingResume: React.FC<ExistingResumeProps> = ({ slug }) => {
           maxWidth: "100vw",
           display: "flex",
           alignItems: "center",
-          border: "1px solid",
-          padding: 0.5,
-          borderRadius: 1,
         }}
       >
         <Typography
