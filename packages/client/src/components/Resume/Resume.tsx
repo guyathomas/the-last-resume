@@ -25,7 +25,7 @@ import {
 } from "./styles";
 import set from "lodash/set";
 import { TextField } from "@material-ui/core";
-import cleanInput from 'utils/cleanInput'
+import cleanInput from "utils/cleanInput";
 interface SectionDetail {
   date: string;
   company: string;
@@ -115,23 +115,26 @@ const Resume: React.FC<ResumeProps> = ({
               <FirstName
                 contentEditable={isEditing}
                 onInput={createOnInput("firstName")}
-              >
-                {initialValues.firstName}
-              </FirstName>
+                dangerouslySetInnerHTML={{
+                  __html: cleanInput(initialValues.firstName),
+                }}
+              />
               <LastName
                 contentEditable={isEditing}
                 onInput={createOnInput("lastName")}
-              >
-                {initialValues.lastName}
-              </LastName>
+                dangerouslySetInnerHTML={{
+                  __html: cleanInput(initialValues.lastName),
+                }}
+              />
             </Names>
             <DescriptionRow>
               <Description
                 contentEditable={isEditing}
                 onInput={createOnInput("tagline")}
-              >
-                {initialValues.tagline}
-              </Description>
+                dangerouslySetInnerHTML={{
+                  __html: cleanInput(initialValues.tagline),
+                }}
+              />
             </DescriptionRow>
           </Titles>
           <Contacts>
@@ -149,9 +152,8 @@ const Resume: React.FC<ResumeProps> = ({
                         cleanInput(event.currentTarget.innerText)
                       );
                     }}
-                  >
-                    {detail}
-                  </ContactDetail>
+                    dangerouslySetInnerHTML={{ __html: cleanInput(detail) }}
+                  />
                 </ContactWrapper>
               );
             })}
@@ -163,9 +165,8 @@ const Resume: React.FC<ResumeProps> = ({
         <SectionContentInner
           contentEditable={isEditing}
           onInput={createOnInput("intro")}
-        >
-          {initialValues.intro}
-        </SectionContentInner>
+          dangerouslySetInnerHTML={{ __html: cleanInput(initialValues.intro) }}
+        />
       </IntroContent>
       {currentValues.sections.map(({ label, values }, sectionIndex) => (
         <>
@@ -264,10 +265,10 @@ const Resume: React.FC<ResumeProps> = ({
                       setFieldValue(fieldName, value);
                     }}
                     contentEditable={isEditing}
-                    company={company || ""}
-                    title={title || ""}
-                    date={date || ""}
-                    details={details || ""}
+                    company={cleanInput(company) || ""}
+                    title={cleanInput(title) || ""}
+                    date={cleanInput(date) || ""}
+                    details={cleanInput(details) || ""}
                     key={sectionValueName}
                   />
                 );
