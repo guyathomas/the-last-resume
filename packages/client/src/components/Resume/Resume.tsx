@@ -25,7 +25,7 @@ import {
 } from "./styles";
 import set from "lodash/set";
 import { TextField } from "@material-ui/core";
-
+import cleanInput from 'utils/cleanInput'
 interface SectionDetail {
   date: string;
   company: string;
@@ -64,6 +64,14 @@ interface ResumeProps {
   setResume: React.Dispatch<React.SetStateAction<ResumeJSON_v2>>;
 }
 
+function swap<T>(array: T[], i: number, j: number) {
+  const newArray = [...array];
+  var b = newArray[i];
+  newArray[i] = newArray[j];
+  newArray[j] = b;
+  return newArray;
+}
+
 const Resume: React.FC<ResumeProps> = ({
   isEditing,
   setResume,
@@ -77,7 +85,7 @@ const Resume: React.FC<ResumeProps> = ({
   };
   const createOnInput =
     (name: string) => (event: React.FormEvent<HTMLElement>) => {
-      setFieldValue(String(name), event.currentTarget.innerText);
+      setFieldValue(String(name), cleanInput(event.currentTarget.innerText));
     };
   return (
     <PageContainer>
@@ -138,7 +146,7 @@ const Resume: React.FC<ResumeProps> = ({
                     onInput={(event) => {
                       setFieldValue(
                         `contactDetails[${index}][1]`,
-                        event.currentTarget.innerText
+                        cleanInput(event.currentTarget.innerText)
                       );
                     }}
                   >
@@ -164,28 +172,65 @@ const Resume: React.FC<ResumeProps> = ({
           <TimelineSectionTitle>{label}</TimelineSectionTitle>
           <TimelineSectionDetails>
             <SectionContentInner>
-              {values.map((_, sectionValueIndex) => {
+              {values.map((value, sectionValueIndex) => {
                 const sectionValueName = `sections[${sectionIndex}].values[${sectionValueIndex}]`;
-                const { company, date, details, title } =
-                  currentValues.sections[sectionIndex].values[
-                    sectionValueIndex
-                  ];
+                const { company, date, details, title } = value;
                 return (
                   <Timeline
-                    allowRemove={
-                      currentValues.sections[sectionIndex].values.length > 1
-                    }
+                    allowRemove={values.length > 1}
                     allowAdd={sectionValueIndex === 0}
+                    allowMoveUp={sectionValueIndex !== 0}
+                    allowMoveDown={sectionValueIndex !== values.length - 1}
                     onRemove={() => {
                       const newState = {
                         ...currentValues,
                         sections: currentValues.sections.map((s, i) => {
                           if (i === sectionIndex) {
                             const newValues = [...s.values];
-                            newValues.splice(sectionIndex, 1);
+                            newValues.splice(sectionValueIndex, 1);
                             return {
                               label: s.label,
                               values: newValues,
+                            };
+                          } else {
+                            return s;
+                          }
+                        }),
+                      };
+                      setResume(newState);
+                    }}
+                    onMoveUp={() => {
+                      const newState = {
+                        ...currentValues,
+                        sections: currentValues.sections.map((s, i) => {
+                          if (i === sectionIndex) {
+                            return {
+                              label: s.label,
+                              values: swap(
+                                s.values,
+                                sectionValueIndex,
+                                sectionValueIndex - 1
+                              ),
+                            };
+                          } else {
+                            return s;
+                          }
+                        }),
+                      };
+                      setResume(newState);
+                    }}
+                    onMoveDown={() => {
+                      const newState = {
+                        ...currentValues,
+                        sections: currentValues.sections.map((s, i) => {
+                          if (i === sectionIndex) {
+                            return {
+                              label: s.label,
+                              values: swap(
+                                s.values,
+                                sectionValueIndex,
+                                sectionValueIndex + 1
+                              ),
                             };
                           } else {
                             return s;

@@ -6,7 +6,10 @@ import { CONSTANTS } from "styles";
 import { SectionButton } from "./styles";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
+import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
+import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import { Box } from "@material-ui/core";
+import cleanInput from 'utils/cleanInput'
 
 interface TimelineProps {
   date?: string;
@@ -16,9 +19,13 @@ interface TimelineProps {
   className?: string;
   contentEditable?: boolean;
   allowRemove?: boolean;
+  allowMoveUp?: boolean;
+  allowMoveDown?: boolean;
   allowAdd?: boolean;
   onRemove?: () => void;
   onAdd?: () => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
   onChange?: (fieldValue: TimelineFieldNames, value: string) => void;
 }
 
@@ -89,12 +96,6 @@ const TimelineDetailsContent = styled(ContentEditable)`
   }
 `;
 
-const RemoveSection = styled(SectionButton)`
-  top: 3rem;
-`;
-
-const AddSection = styled(SectionButton)``;
-
 type TimelineFieldNames = any;
 
 const ActionContainer = styled(Box)`
@@ -118,24 +119,46 @@ const Timeline: React.FC<TimelineProps> = ({
   onChange,
   allowRemove,
   allowAdd,
+  onMoveUp,
+  allowMoveUp,
+  allowMoveDown,
+  onMoveDown,
 }) => {
   return (
     <TimelineOuter className={className}>
       {contentEditable && (
         <ActionContainer>
           {allowAdd && (
-            <AddSection type="button" onClick={onAdd}>
+            <SectionButton type="button" actionType="positive" onClick={onAdd}>
               <AddIcon />
-            </AddSection>
+            </SectionButton>
           )}
           {allowRemove && (
-            <RemoveSection
+            <SectionButton
               type="button"
               onClick={onRemove}
               actionType="negative"
             >
               <RemoveIcon />
-            </RemoveSection>
+            </SectionButton>
+          )}
+          {allowMoveUp && (
+            <SectionButton
+              type="button"
+              onClick={onMoveUp}
+              actionType="neutral"
+            >
+              <ArrowUpwardIcon />
+            </SectionButton>
+          )}
+          {allowMoveDown && (
+            <SectionButton
+              type="button"
+              onClick={onMoveDown}
+              actionType="neutral"
+            >
+              <ArrowDownwardIcon />
+            </SectionButton>
           )}
         </ActionContainer>
       )}
@@ -145,7 +168,7 @@ const Timeline: React.FC<TimelineProps> = ({
           disabled={!contentEditable}
           onChange={(event) => {
             if (onChange) {
-              onChange("company", event.target.value);
+              onChange("company", cleanInput(event.target.value));
             }
           }}
           tagName="h3"
@@ -155,7 +178,7 @@ const Timeline: React.FC<TimelineProps> = ({
           disabled={!contentEditable}
           onChange={(event) => {
             if (onChange) {
-              onChange("date", event.target.value);
+              onChange("date", cleanInput(event.target.value));
             }
           }}
           tagName="h3"
@@ -165,7 +188,7 @@ const Timeline: React.FC<TimelineProps> = ({
           disabled={!contentEditable}
           onChange={(event) => {
             if (onChange) {
-              onChange("title", event.target.value);
+              onChange("title", cleanInput(event.target.value));
             }
           }}
           tagName="h4"
@@ -174,10 +197,11 @@ const Timeline: React.FC<TimelineProps> = ({
       <TimelineDetails>
         <TimelineDetailsContent
           html={details}
+          style={{}}
           disabled={!contentEditable}
           onChange={(event) => {
             if (onChange) {
-              onChange(`details`, event.target.value);
+              onChange(`details`, cleanInput(event.target.value));
             }
           }}
           tagName="div"

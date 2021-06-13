@@ -251,15 +251,19 @@ export const Names = styled.div`
 `;
 
 interface SectionButtonProps {
-  actionType?: "positive" | "negative";
+  actionType?: "positive" | "negative" | "neutral";
 }
 export const SectionButton = styled.button<SectionButtonProps>`
-  position: absolute;
+  margin-top: 1rem;
   outline: none;
   z-index: 1;
   cursor: pointer;
   background-color: ${(props) =>
-    props.actionType === "negative" ? "#ff4d4f" : "#1890ff"};
+    props.actionType === "negative"
+      ? "#ff4d4f"
+      : props.actionType === "positive"
+      ? "#1890ff"
+      : "gray"};
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -269,7 +273,9 @@ export const SectionButton = styled.button<SectionButtonProps>`
   color: white;
   font-weight: bold;
   border: none;
-
+  &:first-child {
+    margin-top: 0;
+  }
   &:active {
     box-shadow: inset 0px 0px 5px #c1c1c1;
   }
