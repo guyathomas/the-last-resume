@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { useAuth } from "hooks/useAuth";
-import { AppBar, Button, Toolbar } from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home";
+import { AppBar, Button, Toolbar } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
 import ButtonLink from "components/ButtonLink";
 
 export const HEADER_MAX_HEIGHT = 64;

@@ -9,9 +9,9 @@ import {
   Fab,
   Button,
   Tooltip,
-} from "@material-ui/core";
-import VisibilityIcon from "@material-ui/icons/Visibility";
-import EditIcon from "@material-ui/icons/Edit";
+} from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   App_Public_Resumes,
   useUpdateResumeByIdMutation,

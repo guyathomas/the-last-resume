@@ -4,11 +4,11 @@ import ContentEditable from "react-contenteditable";
 import styled from "@emotion/styled";
 import { CONSTANTS } from "styles";
 import { SectionButton } from "./styles";
-import RemoveIcon from "@material-ui/icons/Remove";
-import AddIcon from "@material-ui/icons/Add";
-import ArrowUpwardIcon from "@material-ui/icons/ArrowUpward";
-import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
-import { Box } from "@material-ui/core";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import { Box } from "@mui/material";
 import cleanInput from 'utils/cleanInput'
 
 interface TimelineProps {

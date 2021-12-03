@@ -1,7 +1,7 @@
 import React from "react";
-import SaveIcon from "@material-ui/icons/Save";
-import CheckIcon from "@material-ui/icons/Check";
-import { Fab, Box, CircularProgress, Tooltip } from "@material-ui/core";
+import SaveIcon from "@mui/icons-material/Save";
+import CheckIcon from "@mui/icons-material/Check";
+import { Fab, Box, CircularProgress, Tooltip } from "@mui/material";
 
 export const SaveFab: React.FC<{ requestState?: "loading" | "success" }> = ({
   requestState,

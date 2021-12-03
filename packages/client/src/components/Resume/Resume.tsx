@@ -24,7 +24,7 @@ import {
   ContactDetail,
 } from "./styles";
 import set from "lodash/set";
-import { TextField } from "@material-ui/core";
+import { TextField } from "@mui/material";
 import cleanInput from "utils/cleanInput";
 interface SectionDetail {
   date: string;

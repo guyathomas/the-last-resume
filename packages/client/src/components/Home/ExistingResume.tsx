@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Button, Typography, Chip } from "@material-ui/core";
+import { Box, Button, Typography, Chip } from "@mui/material";
 import ButtonLink from "components/ButtonLink";
 import Typewriter from "components/Typewriter";
-import { FileCopyOutlined } from "@material-ui/icons";
+import { FileCopyOutlined } from "@mui/icons-material";
 
 interface ExistingResumeProps {
   slug: string;

@@ -1,4 +1,4 @@
-import { Container } from "@material-ui/core";
+import { Container } from "@mui/material";
 import LayoutForPath, { LayoutSpec } from "@guyathomas/layout-for-path";
 
 import Header, { HEADER_MAX_HEIGHT } from "components/Header";

@@ -1,4 +1,4 @@
-import { Typography, Box } from "@material-ui/core";
+import { Typography, Box } from "@mui/material";
 import React from "react";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";

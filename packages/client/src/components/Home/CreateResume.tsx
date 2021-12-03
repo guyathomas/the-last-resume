@@ -1,7 +1,7 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
 import { useCreateResumeMutation } from "@the-last-resume/graphql";
-import { Box, Button, FormHelperText, Typography } from "@material-ui/core";
+import { Box, Button, FormHelperText, Typography } from "@mui/material";
 import { createResumeData } from "./helpers";
 import { useRouter } from "next/router";
 import * as Yup from "yup";

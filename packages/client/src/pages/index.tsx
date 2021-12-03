@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Button, Box, CircularProgress } from "@material-ui/core";
+import { Button, Box, CircularProgress } from "@mui/material";
 import { useAuth } from "hooks/useAuth";
 import Home from "components/Home";
 import Typewriter from "components/Typewriter";
